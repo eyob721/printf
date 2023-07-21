@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
+int _printf(const char *format, ...);
+
 /* utility lib 1 */
 int _putchar(char c);
 void _puts(char *str);
