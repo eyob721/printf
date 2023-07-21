@@ -4,6 +4,29 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
+/**
+ * struct fmt_opts - data structure for format options
+ * @minus_flag: used to check if - flag is set
+ * @plus_flag: used to check if + flag is set
+ * @hash_flag: used to check if # flag is set
+ * @zero_flag: used to check if 0 flag is set
+ * @blank_flag: used to check if blank(' ') flag is set
+ * @width: field width value
+ * @precison: precison value
+ * @modifier: length modifier value
+ */
+typedef struct fmt_opts
+{
+	int minus_flag;
+	int plus_flag;
+	int hash_flag;
+	int zero_flag;
+	int blank_flag;
+	int width;
+	int precison;
+	char *modifier;
+} fmt_opts_t;	
+
 int _printf(const char *format, ...);
 
 /* utility lib 1 */
