@@ -34,3 +34,9 @@ int _printf(const char *format, ...)
 	}
 	return (printed_chars);
 }
+char *get_specifer(char *s, ftm_opts_t *f)
+{
+	if (*s == '\0')
+		return (NULL);
+	return (s);
+}
