@@ -25,7 +25,20 @@ typedef struct fmt_opts
 	int width;
 	int precison;
 	char *modifier;
-} fmt_opts_t;	
+} fmt_opts_t;
+
+/**
+ * struct fmt_handler - data structure for conversion events
+ * @spc: conversion specifier
+ * @handle: conversion handler function
+ */
+typedef struct fmt_handler
+{
+	char spc;
+	int (*handle)(va_list, fmt_opts_t *);
+}
+
+	
 
 int _printf(const char *format, ...);
 
