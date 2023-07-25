@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 /**
- * main -  a test program for task 7
+ * main -  a test program for task 7 ('+' flag)
  *
  * Return: 0 on success, or 1 on error
  */
