@@ -12,8 +12,14 @@
 int handle_char(va_list args, fmt_opts_t *f, char *buf, int *ctr)
 {
 	int printed_chars = 0;
+	char ch = va_arg(args, int);
 
 	(void)f;
-	printed_chars += _putchar_buf(va_arg(args, int), buf, ctr);
+	if (f->width > 1)
+	{
+		printed_chars += _print_fmt_str_buf(&ch, f, buf, ctr);
+		return (printed_chars);
+	}
+	printed_chars += _putchar_buf(ch, buf, ctr);
 	return (printed_chars);
 }

@@ -13,10 +13,10 @@
 
 /* 19 (max no of digits for LONG_SIGNED) + 1 (-/+ sign) + 1 (for '\0') = 21 */
 #define INT_BUF_SIZE 21
-/* 23 = 22 (max no of digits for LONG_UNSIGNED) + 1 (for '\0') */
-#define OCT_BUF_SIZE 23
-/* 17 = 16 (max no of digits LONG_UNSIGNED) + 1 (for '\0') */
-#define HEX_BUF_SIZE 17
+/* 24 = 22 (max no of digits for LONG_UNSIGNED) + 1 (for '0') + 1 (for '\0') */
+#define OCT_BUF_SIZE 24
+/* 19 = 16 (max no of digits LONG_UNSIGNED) + 2 (for "0x") + 1 (for '\0') */
+#define HEX_BUF_SIZE 19
 /* 21 = 20 (max no of digits for LONG_UNSIGNED) + 1 (for '\0') */
 #define UINT_BUF_SIZE 21
 /* 17 = 16 (max no of digits) + 1 (for '\0') */
@@ -107,6 +107,8 @@ char *convert_addr_to_hex_str(void *addr, char *buf, int buf_size);
 /* Buffer utilities */
 int _putchar_buf(char c, char *buf, int *ctr);
 int _puts_buf(char *str, char *buf, int *ctr);
+int _print_fmt_str_buf(char *str, fmt_opts_t *f, char *buf, int *ctr);
+void write_str_justify_right(char *fmt_str, char *str, int size);
 
 /* _printf implementation function */
 int _printf(const char *format, ...);

@@ -65,6 +65,7 @@ void check_width(char **s, fmt_opts_t *f)
 		{
 			f->width = (f->width * 10) + (**s) - '0';
 			++(*s);
+			continue;
 		}
 		return;
 	}
@@ -97,6 +98,7 @@ void check_precision(char **s, fmt_opts_t *f)
 		{
 			f->precision = (f->precision * 10) + (**s) - '0';
 			++(*s);
+			continue;
 		}
 		return;
 	}

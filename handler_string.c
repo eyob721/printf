@@ -15,9 +15,16 @@ int handle_string(va_list args, fmt_opts_t *f, char *buf, int *ctr)
 	int printed_chars = 0;
 	char *str = va_arg(args, char *);
 
-	(void)f;
 	if (str == NULL)
 		str = "(null)";
+
+	if (f->width > _strlen(str))
+	{
+		printed_chars += _print_fmt_str_buf(str, f, buf, ctr);
+		return (printed_chars);
+	}
+
 	printed_chars += _puts_buf(str, buf, ctr);
+
 	return (printed_chars);
 }

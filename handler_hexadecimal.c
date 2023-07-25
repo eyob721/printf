@@ -13,7 +13,7 @@ int handle_hexadecimal(va_list args, fmt_opts_t *f, char *buf, int *ctr)
 {
 	int printed_chars = 0;
 	unsigned long int num;
-	char *hex_str, hex_buf[HEX_BUF_SIZE] = "#################", ltr = 'l';
+	char *hex_str, hex_buf[HEX_BUF_SIZE] = "###################", ltr = 'l';
 
 	if (f->modifier == 'h')
 		num = (unsigned short)va_arg(args, unsigned int);
@@ -22,13 +22,23 @@ int handle_hexadecimal(va_list args, fmt_opts_t *f, char *buf, int *ctr)
 	else
 		num = (unsigned int)va_arg(args, unsigned int);
 
-	if (f->hash_flag == 1 && num != 0)
-		printed_chars += _puts_buf("0x", buf, ctr);
-
 	if (f->spc_chr == 'X')
 		ltr = 'C';
 
 	hex_str = convert_uint_to_base_str(16, num, ltr, hex_buf, HEX_BUF_SIZE);
+	if (f->hash_flag == 1 && num != 0)
+	{
+		if (f->spc_chr == 'x')
+			*(--hex_str) = 'x';
+		else
+			*(--hex_str) = 'X';
+		*(--hex_str) = '0';
+	}
+	if (f->width > _strlen(hex_str))
+	{
+		printed_chars += _print_fmt_str_buf(hex_str, f, buf, ctr);
+		return (printed_chars);
+	}
 
 	printed_chars += _puts_buf(hex_str, buf, ctr);
 

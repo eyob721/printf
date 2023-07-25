@@ -23,6 +23,12 @@ int handle_unsigned(va_list args, fmt_opts_t *f, char *buf, int *ctr)
 		num = (unsigned int)va_arg(args, unsigned int);
 
 	uint_str = convert_uint_to_base_str(10, num, 'l', uint_buf, UINT_BUF_SIZE);
+	if (f->width > _strlen(uint_str))
+	{
+		printed_chars += _print_fmt_str_buf(uint_str, f, buf, ctr);
+		return (printed_chars);
+	}
+
 	printed_chars += _puts_buf(uint_str, buf, ctr);
 	return (printed_chars);
 }

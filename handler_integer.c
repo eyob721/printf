@@ -26,9 +26,15 @@ int handle_integer(va_list args, fmt_opts_t *f, char *buf, int *ctr)
 	int_str = convert_int_to_str(num, int_buf, INT_BUF_SIZE);
 
 	if (f->plus_flag == 1 && num >= 0)
-		printed_chars += _putchar_buf('+', buf, ctr);
+		*(--int_str) = '+';
 	else if (f->blank_flag == 1 && num >= 0)
-		printed_chars += _putchar_buf(' ', buf, ctr);
+		*(--int_str) = ' ';
+
+	if (f->width > _strlen(int_str))
+	{
+		printed_chars += _print_fmt_str_buf(int_str, f, buf, ctr);
+		return (printed_chars);
+	}
 
 	printed_chars += _puts_buf(int_str, buf, ctr);
 	return (printed_chars);

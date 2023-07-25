@@ -42,3 +42,54 @@ int _puts_buf(char *str, char *buf, int *ctr)
 		printed_chars += _putchar_buf(*(str++), buf, ctr);
 	return (printed_chars);
 }
+
+/**
+ * _print_fmt_str_buf - a function that formattes a string and writes it to the
+ *						format buffer
+ * @str: a string to be formatted
+ * @f: pointer to the format options
+ * @buf: a pointer to the format buffer
+ * @ctr: current index/counter in the buffer
+ *
+ * Return: number of characters printed
+ */
+int _print_fmt_str_buf(char *str, fmt_opts_t *f, char *buf, int *ctr)
+{
+	int printed_chars = 0;
+	char *fmt_str;
+
+	fmt_str = malloc(sizeof(char) * (f->width + 1)); /* +1 for '\0' */
+	if (fmt_str == NULL)
+		return (0);
+
+	_memset(fmt_str, ' ', f->width);
+
+	write_str_justify_right(fmt_str, str, f->width + 1);
+
+	printed_chars += _puts_buf(fmt_str, buf, ctr);
+
+	free(fmt_str);
+
+	return (printed_chars);
+}
+
+/**
+ * write_str_justify_right - a function writes a string on the allocated format
+ *							 string from the right
+ * @fmt_str: format string
+ * @str: string to written on format string
+ * @size: size of the format string
+ *
+ * Return: void
+ */
+void write_str_justify_right(char *fmt_str, char *str, int size)
+{
+	int len = _strlen(str);
+
+	while (len >= 0 && size >= 0)
+	{
+		fmt_str[size - 1] = str[len];
+		--len;
+		--size;
+	}
+}
