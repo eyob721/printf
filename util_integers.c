@@ -16,7 +16,7 @@
  *					iter 3: 000000000284
  *					iter 4: 0000000-7284
  */
-char *convert_int_to_str(int num, char *buf, int buf_size)
+char *convert_int_to_str(long int num, char *buf, int buf_size)
 {
 	char *start, *digit = "0123456789";
 	int i = buf_size - 1, rem, is_negative;
@@ -43,7 +43,7 @@ char *convert_int_to_str(int num, char *buf, int buf_size)
  *							  any base in string format
  * @base: base of conversion (i.e. decimal, binary, octal or hexadecimal)
  * @num: number to be converted
- * @ltr_case: letter case of the digits, 'c' for CAPITAL, ot 'l' for lowercase
+ * @ltr_case: letter case of the digits, 'C' for CAPITAL, or 'l' for lowercase
  * @buf: buffer for the converted string
  * @buf_size: size of the buffer
  *
@@ -57,10 +57,10 @@ char *convert_int_to_str(int num, char *buf, int buf_size)
  *					iter 3: #########101
  *					iter 4: ########1101
  */
-char *convert_uint_to_base_str(int base, unsigned int num, char ltr_case,
+char *convert_uint_to_base_str(int base, unsigned long int num, char ltr_case,
 							char *buf, int buf_size)
 {
-	char *start, *digit = "0123456789abcedf";
+	char *start, *digit = "0123456789abcdef";
 	int i, rem;
 
 	if (ltr_case == 'C')

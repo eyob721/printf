@@ -1,8 +1,5 @@
 #include "main.h"
 
-/* 9 = 8 (max no of digits) + 1 (for '\0') */
-#define HEX_BUF_SIZE 9
-
 /**
  * handle_custom_string - handler function for custom string conversion
  * @args: list of optional arguments given
@@ -18,7 +15,7 @@
 int handle_custom_string(va_list args, fmt_opts_t *f, char *buf, int *ctr)
 {
 	int printed_chars = 0;
-	char ch, *str, *hex_str, hex_buf[HEX_BUF_SIZE] = "#########";
+	char ch, *str, *hex_str, hex_buf[HEX_BUF_SIZE] = "#################";
 
 	(void)f;
 	str = va_arg(args, char *);

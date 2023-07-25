@@ -11,14 +11,14 @@
 #define NORMAL 0
 #define CONVERSION 1
 
-/* 10 (max no of digits) + 1 (for -/+ sign) + 1 (for '\0') = 12 */
-#define INT_BUF_SIZE 12
-/* 11 = 11 (max no of digits) + 1 (for '\0') */
-#define OCT_BUF_SIZE 12
-/* 9 = 8 (max no of digits) + 1 (for '\0') */
-#define HEX_BUF_SIZE 9
-/* 10 = 9 (max no of digits) + 1 (for '\0') */
-#define UINT_BUF_SIZE 10
+/* 19 (max no of digits for LONG_SIGNED) + 1 (-/+ sign) + 1 (for '\0') = 21 */
+#define INT_BUF_SIZE 21
+/* 23 = 22 (max no of digits for LONG_UNSIGNED) + 1 (for '\0') */
+#define OCT_BUF_SIZE 23
+/* 17 = 16 (max no of digits LONG_UNSIGNED) + 1 (for '\0') */
+#define HEX_BUF_SIZE 17
+/* 21 = 20 (max no of digits for LONG_UNSIGNED) + 1 (for '\0') */
+#define UINT_BUF_SIZE 21
 /* 17 = 16 (max no of digits) + 1 (for '\0') */
 #define PTR_BUF_SIZE 17
 
@@ -99,8 +99,8 @@ void check_modifier(char **s, fmt_opts_t *f);
 void check_specifier(char **s, fmt_opts_t *f);
 
 /* Integer converison utilities */
-char *convert_int_to_str(int num, char *buf, int buf_size);
-char *convert_uint_to_base_str(int base, unsigned int num, char ltr_case,
+char *convert_int_to_str(long int num, char *buf, int buf_size);
+char *convert_uint_to_base_str(int base, unsigned long int num, char ltr_case,
 							char *buf, int buf_size);
 char *convert_addr_to_hex_str(void *addr, char *buf, int buf_size);
 
