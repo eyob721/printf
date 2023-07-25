@@ -77,3 +77,41 @@ char *convert_uint_to_base_str(int base, unsigned int num, char ltr_case,
 	return (start);
 }
 
+
+/**
+ * convert_addr_to_hex_str - a function that converts an address to hexadecimal
+ *							 in string format
+ * @addr: number to be converted
+ * @buf: buffer for the converted string
+ * @buf_size: size of the buffer
+ *
+ * Return: skips all the hashes, and returns the start of the converted
+ *		   hexadecimal number in the buffer
+ * Description: The result is written on the given buffer starting
+ *				from the back to the front.
+ *				e.g. 105 (in binary) is written in each iteration as
+ *					iter 1: ###########9
+ *					iter 2: ##########69
+ */
+char *convert_addr_to_hex_str(void *addr, char *buf, int buf_size)
+{
+	char *start, *digit = "0123456789abcedf";
+	int i, rem;
+	unsigned long addr_num = (unsigned long)addr;
+
+	i = buf_size - 1;
+	buf[i] = '\0';
+	do {
+		--i;
+		rem = addr_num % 16;
+		buf[i] = digit[rem];
+		start = buf + i;
+		addr_num /= 16;
+	} while (addr_num != 0 && i >= 0);
+	buf[--i] = 'x';
+	start = buf + i;
+	buf[--i] = '0';
+	start = buf + i;
+	return (start);
+}
+

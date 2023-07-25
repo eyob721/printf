@@ -1,9 +1,6 @@
 #include "main.h"
 #include <stdarg.h>
 
-/* 10 (max no of digits) + 1 (for -/+ sign) + 1 (for '\0') = 12 */
-#define INT_BUF_SIZE 12
-
 /**
  * handle_integer - handler function for signed integer conversion
  * @args: list of optional arguments given

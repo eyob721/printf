@@ -1,8 +1,5 @@
 #include "main.h"
 
-/* 10 = 9 (max no of digits) + 1 (for '\0') */
-#define UINT_BUF_SIZE 10
-
 /**
  * handle_unsigned - handler function for unsigned conversion
  * @args: list of optional arguments given

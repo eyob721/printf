@@ -1,8 +1,5 @@
 #include "main.h"
 
-/* 9 = 8 (max no of digits) + 1 (for '\0') */
-#define HEX_BUF_SIZE 9
-
 /**
  * handle_hex_lower - handler function for hexadecimal lowercase conversion
  * @args: list of optional arguments given

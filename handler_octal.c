@@ -1,8 +1,5 @@
 #include "main.h"
 
-/* 11 = 11 (max no of digits) + 1 (for '\0') */
-#define OCT_BUF_SIZE 12
-
 /**
  * handle_octal - handler function for octal conversion
  * @args: list of optional arguments given

@@ -11,6 +11,17 @@
 #define NORMAL 0
 #define CONVERSION 1
 
+/* 10 (max no of digits) + 1 (for -/+ sign) + 1 (for '\0') = 12 */
+#define INT_BUF_SIZE 12
+/* 11 = 11 (max no of digits) + 1 (for '\0') */
+#define OCT_BUF_SIZE 12
+/* 9 = 8 (max no of digits) + 1 (for '\0') */
+#define HEX_BUF_SIZE 9
+/* 10 = 9 (max no of digits) + 1 (for '\0') */
+#define UINT_BUF_SIZE 10
+/* 17 = 16 (max no of digits) + 1 (for '\0') */
+#define PTR_BUF_SIZE 17
+
 /**
  * struct format_options - data structure for format options
  * @minus_flag: used to check if - flag is set
@@ -89,6 +100,7 @@ void check_specifier(char **s);
 char *convert_int_to_str(int num, char *buf, int buf_size);
 char *convert_uint_to_base_str(int base, unsigned int num, char ltr_case,
 							char *buf, int buf_size);
+char *convert_addr_to_hex_str(void *addr, char *buf, int buf_size);
 
 /* Buffer utilities */
 int _putchar_buf(char c, char *buf, int *ctr);
@@ -113,5 +125,6 @@ int handle_octal(va_list args, fmt_opts_t *f, char *buf, int *ctr);
 int handle_hex_lower(va_list args, fmt_opts_t *f, char *buf, int *ctr);
 int handle_hex_upper(va_list args, fmt_opts_t *f, char *buf, int *ctr);
 int handle_custom_string(va_list args, fmt_opts_t *f, char *buf, int *ctr);
+int handle_pointer(va_list args, fmt_opts_t *f, char *buf, int *ctr);
 
 #endif

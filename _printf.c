@@ -101,6 +101,7 @@ int (*get_specifier_handler(char chr))(va_list, fmt_opts_t *, char *, int *)
 		{'x', handle_hex_lower},
 		{'X', handle_hex_upper},
 		{'S', handle_custom_string},
+		{'p', handle_pointer},
 		{'\0', NULL}
 	};
 	int i = 0;
