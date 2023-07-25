@@ -12,11 +12,12 @@
 int handle_octal(va_list args, fmt_opts_t *f, char *buf, int *ctr)
 {
 	int printed_chars = 0;
+	unsigned int num = va_arg(args, unsigned int);
 	char *oct_str, oct_buf[OCT_BUF_SIZE] = "############";
 
-	(void)f;
-	oct_str = convert_uint_to_base_str(8, va_arg(args, unsigned int), 'l',
-									oct_buf, OCT_BUF_SIZE);
+	if (f->hash_flag == 1 && num != 0)
+		printed_chars += _putchar_buf('0', buf, ctr);
+	oct_str = convert_uint_to_base_str(8, num, 'l', oct_buf, OCT_BUF_SIZE);
 	printed_chars += _puts_buf(oct_str, buf, ctr);
 	return (printed_chars);
 }
