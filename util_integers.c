@@ -109,7 +109,6 @@ char *convert_addr_to_hex_str(void *addr, char *buf, int buf_size)
 		addr_num /= 16;
 	} while (addr_num != 0 && i >= 0);
 	buf[--i] = 'x';
-	start = buf + i;
 	buf[--i] = '0';
 	start = buf + i;
 	return (start);
