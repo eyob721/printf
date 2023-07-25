@@ -32,6 +32,7 @@
  * @width: field width value
  * @precision: precision value
  * @modifier: length modifier value
+ * @spc_chr: specifier character
  */
 typedef struct format_options
 {
@@ -43,6 +44,7 @@ typedef struct format_options
 	int width;
 	int precision;
 	char modifier;
+	char spc_chr;
 } fmt_opts_t;
 
 /**
@@ -94,7 +96,7 @@ void check_flag(char **s, fmt_opts_t *f);
 void check_width(char **s, fmt_opts_t *f);
 void check_precision(char **s, fmt_opts_t *f);
 void check_modifier(char **s, fmt_opts_t *f);
-void check_specifier(char **s);
+void check_specifier(char **s, fmt_opts_t *f);
 
 /* Integer converison utilities */
 char *convert_int_to_str(int num, char *buf, int buf_size);
@@ -122,8 +124,7 @@ int handle_integer(va_list args, fmt_opts_t *f, char *buf, int *ctr);
 int handle_binary(va_list args, fmt_opts_t *f, char *buf, int *ctr);
 int handle_unsigned(va_list args, fmt_opts_t *f, char *buf, int *ctr);
 int handle_octal(va_list args, fmt_opts_t *f, char *buf, int *ctr);
-int handle_hex_lower(va_list args, fmt_opts_t *f, char *buf, int *ctr);
-int handle_hex_upper(va_list args, fmt_opts_t *f, char *buf, int *ctr);
+int handle_hexadecimal(va_list args, fmt_opts_t *f, char *buf, int *ctr);
 int handle_custom_string(va_list args, fmt_opts_t *f, char *buf, int *ctr);
 int handle_pointer(va_list args, fmt_opts_t *f, char *buf, int *ctr);
 

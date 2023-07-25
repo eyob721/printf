@@ -75,7 +75,7 @@ char *get_specifier(char *s, fmt_opts_t *f)
 	check_width(&s, f);
 	check_precision(&s, f);
 	check_modifier(&s, f);
-	check_specifier(&s);
+	check_specifier(&s, f);
 	return (s);
 }
 
@@ -98,8 +98,8 @@ int (*get_specifier_handler(char chr))(va_list, fmt_opts_t *, char *, int *)
 		{'b', handle_binary},
 		{'u', handle_unsigned},
 		{'o', handle_octal},
-		{'x', handle_hex_lower},
-		{'X', handle_hex_upper},
+		{'x', handle_hexadecimal},
+		{'X', handle_hexadecimal},
 		{'S', handle_custom_string},
 		{'p', handle_pointer},
 		{'\0', NULL}
@@ -131,5 +131,6 @@ void reset_format_options(fmt_opts_t *f)
 	f->width = 0;
 	f->precision = 0;
 	f->modifier = 0;
+	f->spc_chr = 0;
 }
 

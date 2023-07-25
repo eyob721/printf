@@ -134,8 +134,10 @@ void check_modifier(char **s, fmt_opts_t *f)
 
 /**
  * check_specifier - checks if the current character at the position pointed by
- *					 's' in the format string is a specifier
+ *					 's' in the format string is a specifier, and stores the
+ *					 specifier character in the format options data
  * @s: double pointer to a position on the format string
+ * @f: pointer to the format options
  *
  * Return: void
  * Description: The function checks if the current character at position 's' in
@@ -150,10 +152,15 @@ void check_modifier(char **s, fmt_opts_t *f)
  *				not NULL for valid syntax) that the function get_specifier()
  *				returns back to _printf()
  */
-void check_specifier(char **s)
+void check_specifier(char **s, fmt_opts_t *f)
 {
 	char specifiers[] = "csdibuoxXSp%";
 
 	if (**s == '\0' || _strchr(specifiers, **s) == NULL)
+	{
 		*s = NULL;
+		f->spc_chr = 0;
+		return;
+	}
+	f->spc_chr = **s;
 }
