@@ -16,7 +16,6 @@ int handle_custom_string(fmt_data_t *f, char *buf, int *ctr)
 	int printed_chars = 0;
 	char ch, *str, *hex_str, hex_buf[HEX_BUF_SIZE] = "#################";
 
-	(void)f;
 	str = va_arg(f->args, char *);
 	if (str == NULL)
 		str = "(null)";

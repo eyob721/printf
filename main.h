@@ -144,6 +144,7 @@ int handle_hexadecimal(fmt_data_t *f, char *buf, int *ctr);
 int handle_pointer(fmt_data_t *f, char *buf, int *ctr);
 int handle_custom_string(fmt_data_t *f, char *buf, int *ctr);
 int handle_custom_binary(fmt_data_t *f, char *buf, int *ctr);
-void rev_string(char *s);
-char *rot13(char *str);
+int handle_custom_reverse_string(fmt_data_t *f, char *buf, int *ctr);
+int handle_custom_rot13(fmt_data_t *f, char *buf, int *ctr);
+
 #endif
