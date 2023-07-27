@@ -1,18 +1,16 @@
 #include "main.h"
 
 /**
- * handle_char - handler function for character conversion
- * @f: pointer to the format data
+ * handle_rev_string- handler function for reversing string
  * @buf: a pointer to the format buffer
  * @ctr: current index/counter in the buffer
  *
  * Return: number of characters printed to stdout
  */
-int handle_char(fmt_data_t *f, char *buf, int *ctr)
+void rev_string(char *s)
 {
-	int printed_chars = 0;
-	char ch = va_arg(f->args, int);
+  int i;
 
-	printed_chars += print_char_format(&ch, f, buf, ctr);
-	return (printed_chars);
+  for (i = _strlen(s) - 1; i >= 0; --i)
+  printed_char += _putchar_buf(s[i], buf, ctr);
 }

@@ -169,7 +169,7 @@ void check_modifier(char **s, fmt_data_t *f)
  */
 void check_specifier(char **s, fmt_data_t *f)
 {
-	char specifiers[] = "csdibuoxXSp%";
+	char specifiers[] = "csdibuoxXSp%rR";
 
 	if (**s == '\0' || _strchr(specifiers, **s) == NULL)
 	{

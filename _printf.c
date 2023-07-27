@@ -101,6 +101,8 @@ int (*get_specifier_handler(char chr))(fmt_data_t *, char *, int *)
 		{'p', handle_pointer},
 		{'b', handle_custom_binary},
 		{'S', handle_custom_string},
+		{'S', handle_rev_string},
+		{'S', handle_rot13},
 		{'\0', NULL}
 	};
 	int i = 0;
