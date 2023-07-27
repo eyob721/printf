@@ -1,5 +1,6 @@
 #include "main.h"
 #include <stdio.h>
+#include <limits.h>
 
 /**
  * main -  a test program for task 7 (' ' flag)
@@ -9,6 +10,7 @@
 int main(void)
 {
 	int sum = 0, i = 0;
+	long int l = INT_MAX;
 
 	(void)sum;
 	(void)i;
@@ -32,6 +34,13 @@ int main(void)
 	sum = _printf("[-7284]: % d\n", -7284);
 	printf("[Got]: %d\n", sum);
 	sum = printf("[-7284]: % d\n", -7284);
+	printf("[Exp]: %d\n", sum);
+
+	l += 1024;
+	printf("\nTest-%d:\n-----------------------------------------------\n", i++);
+	sum = _printf("[l]: % d\n", l);
+	printf("[Got]: %d\n", sum);
+	sum = printf("[l]: % d\n", l);
 	printf("[Exp]: %d\n", sum);
 
 	_printf("----------------------------------------------------------------\n");

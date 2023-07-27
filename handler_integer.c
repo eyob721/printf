@@ -3,25 +3,28 @@
 
 /**
  * handle_integer - handler function for signed integer conversion
- * @args: list of optional arguments given
- * @f: pointer to the format options
+ * @f: pointer to the format data
  * @buf: a pointer to the format buffer
  * @ctr: current index/counter in the buffer
  *
  * Return: number of characters printed to stdout
  */
-int handle_integer(va_list args, fmt_opts_t *f, char *buf, int *ctr)
+int handle_integer(fmt_data_t *f, char *buf, int *ctr)
 {
 	int printed_chars = 0;
 	long int num;
 	char *int_str, int_buf[INT_BUF_SIZE] = "#####################";
 
 	if (f->modifier == 'h')
-		num = (short)va_arg(args, int);
+		num = (short)va_arg(f->args, int);
 	else if (f->modifier == 'l')
-		num = va_arg(args, long int);
+		num = va_arg(f->args, long int);
 	else
-		num = (int)va_arg(args, int);
+		num = (int)va_arg(f->args, int);
+
+	/* If both precision and num are zero, then you do nothing */
+	if (f->precision == 0 && num == 0)
+		return (0);
 
 	int_str = convert_int_to_str(num, int_buf, INT_BUF_SIZE);
 
@@ -30,12 +33,6 @@ int handle_integer(va_list args, fmt_opts_t *f, char *buf, int *ctr)
 	else if (f->blank_flag == 1 && num >= 0)
 		*(--int_str) = ' ';
 
-	if (f->width > _strlen(int_str))
-	{
-		printed_chars += _print_fmt_str_buf(int_str, f, buf, ctr);
-		return (printed_chars);
-	}
-
-	printed_chars += _puts_buf(int_str, buf, ctr);
+	printed_chars += print_integer_format(int_str, f, buf, ctr);
 	return (printed_chars);
 }

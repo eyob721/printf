@@ -2,8 +2,7 @@
 
 /**
  * handle_custom_string - handler function for custom string conversion
- * @args: list of optional arguments given
- * @f: pointer to the format options
+ * @f: pointer to the format data
  * @buf: a pointer to the format buffer
  * @ctr: current index/counter in the buffer
  *
@@ -12,13 +11,13 @@
  *				printed this way: \x, followed by the ASCII code value in
  *				hexadecimal (upper case - always 2 characters)
  */
-int handle_custom_string(va_list args, fmt_opts_t *f, char *buf, int *ctr)
+int handle_custom_string(fmt_data_t *f, char *buf, int *ctr)
 {
 	int printed_chars = 0;
 	char ch, *str, *hex_str, hex_buf[HEX_BUF_SIZE] = "#################";
 
 	(void)f;
-	str = va_arg(args, char *);
+	str = va_arg(f->args, char *);
 	if (str == NULL)
 		str = "(null)";
 	while (*str != '\0')

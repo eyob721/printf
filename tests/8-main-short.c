@@ -113,5 +113,35 @@ int main(void)
 
 	_printf("--------------------------------------------------------------\n");
 
+	_printf("--------------------------------------------------------------\n");
+	_printf("                          EDGE CASES                          \n");
+	_printf("--------------------------------------------------------------\n");
+
+	printf("\nTest-%d:\n-----------------------------------------------\n", i++);
+	sum = _printf("[EDGE CASE]: %h\n", 12724);
+	printf("[Got]: %d\n", sum);
+	sum = printf("[EDGE CASE]: %h\n", 12724);
+	printf("[Exp]: %d\n", sum);
+
+	printf("\nTest-%d:\n-----------------------------------------------\n", i++);
+	sum = _printf("[EDGE CASE]: %hz\n", 12724);
+	printf("[Got]: %d\n", sum);
+	sum = printf("[EDGE CASE]: %hz\n", 12724);
+	printf("[Exp]: %d\n", sum);
+
+	printf("\nTest-%d:\n-----------------------------------------------\n", i++);
+	sum = _printf("[EDGE CASE]: % 020hz\n", 12724);
+	printf("[Got]: %d\n", sum);
+	sum = printf("[EDGE CASE]: % 020hz\n", 12724);
+	printf("[Exp]: %d\n", sum);
+
+	printf("\nTest-%d:\n-----------------------------------------------\n", i++);
+	sum = _printf("[EDGE CASE]: %2#hz\n", 12724);
+	printf("[Got]: %d\n", sum);
+	sum = printf("[EDGE CASE]: %2#hz\n", 12724);
+	printf("[Exp]: %d\n", sum);
+
+	_printf("--------------------------------------------------------------\n");
+
 	return (0);
 }

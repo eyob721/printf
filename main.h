@@ -11,7 +11,7 @@
 #define NORMAL 0
 #define CONVERSION 1
 
-/* 19 (max no of digits for LONG_SIGNED) + 1 (-/+ sign) + 1 (for '\0') = 21 */
+/* 21 = 19 (max no of digits for LONG_SIGNED) + 1 (-/+ sign) + 1 (for '\0') */
 #define INT_BUF_SIZE 21
 /* 24 = 22 (max no of digits for LONG_UNSIGNED) + 1 (for '0') + 1 (for '\0') */
 #define OCT_BUF_SIZE 24
@@ -21,9 +21,14 @@
 #define UINT_BUF_SIZE 21
 /* 17 = 16 (max no of digits) + 1 (for '\0') */
 #define PTR_BUF_SIZE 17
+/* 33 = 32 (max no of digits) + 1 (for '\0') */
+#define BIN_BUF_SIZE 33
+
+#define MAX(x, y) ((x) > (y) ? (x) : (y))
 
 /**
- * struct format_options - data structure for format options
+ * struct format_data - data structure to hold format data
+ * @args: list of optional arguments given
  * @minus_flag: used to check if - flag is set
  * @plus_flag: used to check if + flag is set
  * @hash_flag: used to check if # flag is set
@@ -33,9 +38,11 @@
  * @precision: precision value
  * @modifier: length modifier value
  * @spc_chr: specifier character
+ * @invalid_spc: pointer used to save the invalid specifier position
  */
-typedef struct format_options
+typedef struct format_data
 {
+	va_list args;
 	int minus_flag;
 	int plus_flag;
 	int hash_flag;
@@ -45,7 +52,8 @@ typedef struct format_options
 	int precision;
 	char modifier;
 	char spc_chr;
-} fmt_opts_t;
+	char *invalid_spc;
+} fmt_data_t;
 
 /**
  * struct format_handler - data structure for conversion event
@@ -56,7 +64,7 @@ typedef struct format_options
 typedef struct format_handler
 {
 	char spc_chr;
-	int (*handle)(va_list, fmt_opts_t *, char *, int *);
+	int (*handle)(fmt_data_t *, char *, int *);
 } fmt_hndlr_t;
 
 /* Library utilities 1 */
@@ -92,11 +100,11 @@ unsigned int _strspn(char *s, char *accept);
 char *_strpbrk(char *s, char *accept);
 
 /* Format option utilities */
-void check_flag(char **s, fmt_opts_t *f);
-void check_width(char **s, fmt_opts_t *f);
-void check_precision(char **s, fmt_opts_t *f);
-void check_modifier(char **s, fmt_opts_t *f);
-void check_specifier(char **s, fmt_opts_t *f);
+void check_flag(char **s, fmt_data_t *f);
+void check_width(char **s, fmt_data_t *f);
+void check_precision(char **s, fmt_data_t *f);
+void check_modifier(char **s, fmt_data_t *f);
+void check_specifier(char **s, fmt_data_t *f);
 
 /* Integer converison utilities */
 char *convert_int_to_str(long int num, char *buf, int buf_size);
@@ -107,27 +115,34 @@ char *convert_addr_to_hex_str(void *addr, char *buf, int buf_size);
 /* Buffer utilities */
 int _putchar_buf(char c, char *buf, int *ctr);
 int _puts_buf(char *str, char *buf, int *ctr);
-int _print_fmt_str_buf(char *str, fmt_opts_t *f, char *buf, int *ctr);
-void write_str_justify_right(char *fmt_str, char *str, int size);
+int _puts_nbytes_buf(char *str, int n, char *buf, int *ctr);
+
+/* Formatting utilities */
+int print_char_format(char *str, fmt_data_t *f, char *buf, int *ctr);
+int print_string_format(char *str, fmt_data_t *f, char *buf, int *ctr);
+int print_integer_format(char *int_str, fmt_data_t *f, char *buf, int *ctr);
+void write_format_justify_right(char *fmt_str, int size, char *str, int len);
+void write_format_justify_left(char *fmt_str, int size, char *str, int len);
 
 /* _printf implementation function */
 int _printf(const char *format, ...);
 
 /* _printf function utilities */
-char *get_specifier(char *s, fmt_opts_t *f);
-int (*get_specifier_handler(char chr))(va_list, fmt_opts_t *, char *, int *);
-void reset_format_options(fmt_opts_t *f);
+char *get_specifier(char *s, fmt_data_t *f);
+int (*get_specifier_handler(char chr))(fmt_data_t *, char *, int *);
+void initialize_format_data(fmt_data_t *f);
+int print_invalid_syntax(char **p, fmt_data_t *f, char *buf, int *ctr);
 
 /* Conversion handler functions */
-int handle_char(va_list args, fmt_opts_t *f, char *buf, int *ctr);
-int handle_string(va_list args, fmt_opts_t *f, char *buf, int *ctr);
-int handle_percent(va_list args, fmt_opts_t *f, char *buf, int *ctr);
-int handle_integer(va_list args, fmt_opts_t *f, char *buf, int *ctr);
-int handle_binary(va_list args, fmt_opts_t *f, char *buf, int *ctr);
-int handle_unsigned(va_list args, fmt_opts_t *f, char *buf, int *ctr);
-int handle_octal(va_list args, fmt_opts_t *f, char *buf, int *ctr);
-int handle_hexadecimal(va_list args, fmt_opts_t *f, char *buf, int *ctr);
-int handle_custom_string(va_list args, fmt_opts_t *f, char *buf, int *ctr);
-int handle_pointer(va_list args, fmt_opts_t *f, char *buf, int *ctr);
+int handle_char(fmt_data_t *f, char *buf, int *ctr);
+int handle_string(fmt_data_t *f, char *buf, int *ctr);
+int handle_percent(fmt_data_t *f, char *buf, int *ctr);
+int handle_integer(fmt_data_t *f, char *buf, int *ctr);
+int handle_unsigned(fmt_data_t *f, char *buf, int *ctr);
+int handle_octal(fmt_data_t *f, char *buf, int *ctr);
+int handle_hexadecimal(fmt_data_t *f, char *buf, int *ctr);
+int handle_pointer(fmt_data_t *f, char *buf, int *ctr);
+int handle_custom_string(fmt_data_t *f, char *buf, int *ctr);
+int handle_custom_binary(fmt_data_t *f, char *buf, int *ctr);
 
 #endif

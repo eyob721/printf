@@ -15,51 +15,50 @@
 int _printf(const char *format, ...)
 {
 	char *ptr = (char *)format, *spc, fmt_buf[BUFFER_SIZE] = {0};
-	int printed_chars = 0, fmt_case = 0, buf_ctr = 0, is_valid_syntax = 1;
-	va_list args;
-	fmt_opts_t fopts;
-	int (*handle)(va_list, fmt_opts_t *, char *, int *);
+	int printed_chars = 0, fmt_case = 0, ctr = 0;
+	int (*handle)(fmt_data_t *, char *, int *);
+	fmt_data_t fdata;
 
 	if (format == NULL || _strcmp((char *)format, "%") == 0 ||
 			_strcmp((char *)format, "% ") == 0)
 		return (-1);
-	va_start(args, format);
+	va_start(fdata.args, format);
 	while (*ptr != '\0')
 		switch (fmt_case)
 		{
 		case NORMAL:
-			if (*ptr == '%' && is_valid_syntax)
+			if (*ptr == '%')
 			{
 				fmt_case = CONVERSION;
 				break;
 			}
-			printed_chars += _putchar_buf(*ptr, fmt_buf, &buf_ctr);
-			++ptr, is_valid_syntax = 1;
+			printed_chars += _putchar_buf(*ptr, fmt_buf, &ctr);
+			++ptr;
 		break;
 		case CONVERSION:
-			spc = get_specifier(ptr + 1, &fopts);
+			fmt_case = NORMAL;
+			initialize_format_data(&fdata);
+			spc = get_specifier(ptr + 1, &fdata);
 			if (spc != NULL) /* Valid format syntax */
 			{
 				handle = get_specifier_handler(*spc);
-				printed_chars += handle(args, &fopts, fmt_buf, &buf_ctr);
-				reset_format_options(&fopts);
+				printed_chars += handle(&fdata, fmt_buf, &ctr);
 				ptr = spc + 1;
+				break;
 			}
-			else /* Invalid format syntax */
-				is_valid_syntax = 0;
-			fmt_case = NORMAL;
+			printed_chars += print_invalid_syntax(&ptr, &fdata, fmt_buf, &ctr);
 		break;
 		}
-	printed_chars += _putchar_buf(BUFFER_FLUSH, fmt_buf, &buf_ctr);
-	va_end(args);
+	printed_chars += _putchar_buf(BUFFER_FLUSH, fmt_buf, &ctr);
+	va_end(fdata.args);
 	return (printed_chars);
 }
 /**
  * get_specifier - a function that gets the specifier position while also
- *				   checking that format options set in the format string are set
+ *				   checking that format data set in the format string are set
  *				   in the correct format syntax.
  * @s: pointer to the position in the format string, next to the '%' character
- * @f: pointer to the format options
+ * @f: pointer to the format data
  *
  * Return: NULL if the format syntax is invalid, or a pointer to the conversion
  *		   specifier position in the format string
@@ -67,7 +66,7 @@ int _printf(const char *format, ...)
  *				%[flags][width][.precision][modifier]specifier
  *				NOTE: all other options are optional, except the specifier
  */
-char *get_specifier(char *s, fmt_opts_t *f)
+char *get_specifier(char *s, fmt_data_t *f)
 {
 	if (*s == '\0')
 		return (NULL);
@@ -87,7 +86,7 @@ char *get_specifier(char *s, fmt_opts_t *f)
  * Return: pointer to the respective conversion specifier handler function, or
  *		   NULL if the specifier is not supported
  */
-int (*get_specifier_handler(char chr))(va_list, fmt_opts_t *, char *, int *)
+int (*get_specifier_handler(char chr))(fmt_data_t *, char *, int *)
 {
 	fmt_hndlr_t fmt_hndlr[] = {
 		{'%', handle_percent},
@@ -95,13 +94,13 @@ int (*get_specifier_handler(char chr))(va_list, fmt_opts_t *, char *, int *)
 		{'s', handle_string},
 		{'d', handle_integer},
 		{'i', handle_integer},
-		{'b', handle_binary},
 		{'u', handle_unsigned},
 		{'o', handle_octal},
 		{'x', handle_hexadecimal},
 		{'X', handle_hexadecimal},
-		{'S', handle_custom_string},
 		{'p', handle_pointer},
+		{'b', handle_custom_binary},
+		{'S', handle_custom_string},
 		{'\0', NULL}
 	};
 	int i = 0;
@@ -116,12 +115,12 @@ int (*get_specifier_handler(char chr))(va_list, fmt_opts_t *, char *, int *)
 }
 
 /**
- * reset_format_options - initializes fomrat options
- * @f: pointer to the format options
+ * initialize_format_data - initializes format data
+ * @f: pointer to the format data
  *
  * Return: void
  */
-void reset_format_options(fmt_opts_t *f)
+void initialize_format_data(fmt_data_t *f)
 {
 	f->minus_flag = 0;
 	f->plus_flag = 0;
@@ -129,8 +128,34 @@ void reset_format_options(fmt_opts_t *f)
 	f->zero_flag = 0;
 	f->blank_flag = 0;
 	f->width = 0;
-	f->precision = 0;
+	f->precision = -1;
 	f->modifier = 0;
 	f->spc_chr = 0;
+	f->invalid_spc = NULL;
 }
 
+/**
+ * print_invalid_syntax - prints the invalid synatx to the format Buffer
+ * @p: a double pointer to the current position on the format string
+ * @f: pointer to the format data
+ * @buf: a pointer to the format buffer
+ * @ctr: current index/counter in the buffer
+ *
+ * Return: number of characters printed
+ */
+int print_invalid_syntax(char **p, fmt_data_t *f, char *buf, int *ctr)
+{
+	int printed_chars = 0;
+
+	while (**p != '\0' && *p <= f->invalid_spc)
+	{
+		if (**p == f->modifier)
+		{
+			++(*p); /* Skip it if is a modifier */
+			continue;
+		}
+		printed_chars += _putchar_buf(**p, buf, ctr);
+		++(*p);
+	}
+	return (printed_chars);
+}

@@ -1,11 +1,12 @@
 #include "main.h"
 #include <ctype.h>
+#include <stdarg.h>
 
 /**
  * check_flag - checks if the current character at the position pointed by 's'
  *				in the format string is a flag character
  * @s: double pointer to a position on the format string
- * @f: pointer to the format options
+ * @f: pointer to the format data
  *
  * Return: void
  * Description: The function checks if the current character at position 's' in
@@ -14,7 +15,7 @@
  *				character in the format string. If the character at 's' is not
  *				a flag then the function will do nothing and exit.
  */
-void check_flag(char **s, fmt_opts_t *f)
+void check_flag(char **s, fmt_data_t *f)
 {
 	while (**s != '\0')
 	{
@@ -46,7 +47,7 @@ void check_flag(char **s, fmt_opts_t *f)
  * check_width - checks if the current character at the position pointed by 's'
  *				 in the format string is a width
  * @s: double pointer to a position on the format string
- * @f: pointer to the format options
+ * @f: pointer to the format data
  *
  * Return: void
  * Description: The function checks if the current character at position 's' in
@@ -56,9 +57,15 @@ void check_flag(char **s, fmt_opts_t *f)
  *				there are no more digits. But if the character at 's' is not
  *				width then the function will do nothing and exit.
  */
-void check_width(char **s, fmt_opts_t *f)
+void check_width(char **s, fmt_data_t *f)
 {
 	f->width = 0;
+	if (**s == '*')
+	{
+		f->width = va_arg(f->args, int);
+		++(*s);
+		return;
+	}
 	while (**s != '\0')
 	{
 		if (_isdigit(**s))
@@ -75,7 +82,7 @@ void check_width(char **s, fmt_opts_t *f)
  * check_precision - checks if the current character at the position pointed by
  *					 's' in the format string is a precision
  * @s: double pointer to a position on the format string
- * @f: pointer to the format options
+ * @f: pointer to the format data
  *
  * Return: void
  * Description: The function checks if the current character at position 's' in
@@ -86,12 +93,18 @@ void check_width(char **s, fmt_opts_t *f)
  *				more digits. But if the character at 's' is not precision then
  *				function will do nothing and exit.
  */
-void check_precision(char **s, fmt_opts_t *f)
+void check_precision(char **s, fmt_data_t *f)
 {
 	if (**s != '.' && !(_isdigit(*(*s + 1))))
 		return;
 	++(*s);
 	f->precision = 0;
+	if (**s == '*')
+	{
+		f->precision = va_arg(f->args, int);
+		++(*s);
+		return;
+	}
 	while (**s != '\0')
 	{
 		if (_isdigit(**s))
@@ -108,7 +121,7 @@ void check_precision(char **s, fmt_opts_t *f)
  * check_modifier - checks if the current character at the position pointed by
  *					's' in the format string is a modifier
  * @s: double pointer to a position on the format string
- * @f: pointer to the format options
+ * @f: pointer to the format data
  *
  * Return: void
  * Description: The function checks if the current character at position 's' in
@@ -118,7 +131,7 @@ void check_precision(char **s, fmt_opts_t *f)
  *				character at 's' is not a modifier then function will do
  *				nothing and exit.
  */
-void check_modifier(char **s, fmt_opts_t *f)
+void check_modifier(char **s, fmt_data_t *f)
 {
 	switch (**s)
 	{
@@ -137,15 +150,15 @@ void check_modifier(char **s, fmt_opts_t *f)
 /**
  * check_specifier - checks if the current character at the position pointed by
  *					 's' in the format string is a specifier, and stores the
- *					 specifier character in the format options data
+ *					 specifier character in the format data data
  * @s: double pointer to a position on the format string
- * @f: pointer to the format options
+ * @f: pointer to the format data
  *
  * Return: void
  * Description: The function checks if the current character at position 's' in
  *				the format string is a specifier. Now at this point the position
  *				pointer 's' must be at the conversion specifier character, if it
- *				is not then the format options in the format string are not set
+ *				is not then the format data in the format string are not set
  *				in the correct format syntax, make the format invalid so
  *				's' will be set to NULL. But if the character at 's' is a
  *				conversion specifier then it is a valid format syntax and so 's'
@@ -154,15 +167,17 @@ void check_modifier(char **s, fmt_opts_t *f)
  *				not NULL for valid syntax) that the function get_specifier()
  *				returns back to _printf()
  */
-void check_specifier(char **s, fmt_opts_t *f)
+void check_specifier(char **s, fmt_data_t *f)
 {
 	char specifiers[] = "csdibuoxXSp%";
 
 	if (**s == '\0' || _strchr(specifiers, **s) == NULL)
 	{
-		*s = NULL;
+		f->invalid_spc = *s; /* Save the invalid specifier position */
 		f->spc_chr = 0;
+		*s = NULL;
 		return;
 	}
 	f->spc_chr = **s;
+	f->invalid_spc = NULL;
 }
