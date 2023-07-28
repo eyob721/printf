@@ -90,5 +90,26 @@ int main(void)
 	sum = printf("[%#50x]\n", UINT_MAX);
 	printf("[Exp]: %d\n", sum);
 
+	_printf("\n------------------------------------------------------------\n");
+	_printf("                         POINTER                              \n");
+	_printf("--------------------------------------------------------------\n");
+
+	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	sum = _printf("[%7p]\n", (void *)0x7faf51f0f608);
+	printf("[Got]: %d\n", sum);
+	sum = printf("[%7p]\n", (void *)0x7faf51f0f608);
+	printf("[Exp]: %d\n", sum);
+
+	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	sum = _printf("[%21p]\n", (void *)0x7faf51f0f608);
+	printf("[Got]: %d\n", sum);
+	sum = printf("[%21p]\n", (void *)0x7faf51f0f608);
+	printf("[Exp]: %d\n", sum);
+
+	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	sum = _printf("[%21p]\n", NULL);
+	printf("[Got]: %d\n", sum);
+	sum = printf("[%21p]\n", NULL);
+	printf("[Exp]: %d\n", sum);
 	return (0);
 }

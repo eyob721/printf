@@ -105,8 +105,10 @@ int print_string_format(char *str, fmt_data_t *f, char *buf, int *ctr)
  *		- size of the format width is MAX(width, precision)
  *		- if the maximum is precision or if zero flag is set, padding is '0',
  *		  otherwise it is ' ' by default
- *		- if the padding is '0' and the integer has a sign, it must be
- *		  written at the front and the format size also increments by 1
+ *		- if the precision is set and the integer has a sign(i.e. sign != '0'),
+ *		  it must be written at the front and the format size is incremented 1
+ *		- however, if the zero flag is set, but not the precision, then the
+ *		  format size will not be incremented
  *		- the sign and padding is handled by switching the sign character of the
  *		  integer string and and the first character in the format string, but
  *		  only in the case that the padding is '0'
@@ -132,8 +134,9 @@ int print_integer_format(char *int_str, fmt_data_t *f, char *buf, int *ctr)
 	{
 		sign = *int_str;
 		*int_str = pad;
-		++fmt_size; /* To accommodate the sign */
 	}
+	if (fmt_size == f->precision && sign != '0')
+		++fmt_size;
 	fmt_str = malloc(sizeof(char) * (fmt_size + 1)); /* +1 for '\0' */
 	if (fmt_str == NULL)
 		return (0);

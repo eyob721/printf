@@ -22,7 +22,7 @@ int handle_integer(fmt_data_t *f, char *buf, int *ctr)
 	else
 		num = (int)va_arg(f->args, int);
 
-	/* If both precision and num are zero, then you do nothing */
+	/* If both precision and num are zero, then no need for formatting */
 	if (f->precision == 0 && num == 0)
 		return (0);
 
