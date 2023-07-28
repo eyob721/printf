@@ -55,9 +55,17 @@ int main(void)
 	printf("[Exp]: %d\n", sum);
 
 	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	_printf("width + plus (+ve number)\n");
 	sum = _printf("[%+50d]\n", INT_MAX);
 	printf("[Got]: %d\n", sum);
 	sum = printf("[%+50d]\n", INT_MAX);
+	printf("[Exp]: %d\n", sum);
+
+	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	_printf("width + zero (-ve number)\n");
+	sum = _printf("[%049d]\n", INT_MIN);
+	printf("[Got]: %d\n", sum);
+	sum = printf("[%049d]\n", INT_MIN);
 	printf("[Exp]: %d\n", sum);
 
 	_printf("\n------------------------------------------------------------\n");

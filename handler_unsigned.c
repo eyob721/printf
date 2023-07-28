@@ -27,7 +27,7 @@ int handle_unsigned(fmt_data_t *f, char *buf, int *ctr)
 
 	uint_str = convert_uint_to_base_str(10, num, 'l', uint_buf, UINT_BUF_SIZE);
 
-	printed_chars += print_integer_format(uint_str, f, buf, ctr);
+	printed_chars += print_unsigned_format(uint_str, f, buf, ctr);
 	return (printed_chars);
 }
 

@@ -121,8 +121,8 @@ int _puts_nbytes_buf(char *str, int n, char *buf, int *ctr);
 int print_char_format(char *str, fmt_data_t *f, char *buf, int *ctr);
 int print_string_format(char *str, fmt_data_t *f, char *buf, int *ctr);
 int print_integer_format(char *int_str, fmt_data_t *f, char *buf, int *ctr);
-void write_format_justify_right(char *fmt_str, int size, char *str, int len);
-void write_format_justify_left(char *fmt_str, int size, char *str, int len);
+int print_unsigned_format(char *uint_str, fmt_data_t *f, char *buf, int *ctr);
+void write_format_justify(char justify, char *fmt_str, int size, char *str, int len);
 
 /* _printf implementation function */
 int _printf(const char *format, ...);

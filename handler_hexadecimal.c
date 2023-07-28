@@ -38,6 +38,6 @@ int handle_hexadecimal(fmt_data_t *f, char *buf, int *ctr)
 		*(--hex_str) = '0';
 	}
 
-	printed_chars += print_integer_format(hex_str, f, buf, ctr);
+	printed_chars += print_unsigned_format(hex_str, f, buf, ctr);
 	return (printed_chars);
 }

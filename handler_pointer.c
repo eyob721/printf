@@ -19,6 +19,6 @@ int handle_pointer(fmt_data_t *f, char *buf, int *ctr)
 		ptr_str = "(nil)";
 	else
 		ptr_str = convert_addr_to_hex_str(addr, ptr_buf, PTR_BUF_SIZE);
-	printed_chars += print_integer_format(ptr_str, f, buf, ctr);
+	printed_chars += print_unsigned_format(ptr_str, f, buf, ctr);
 	return (printed_chars);
 }

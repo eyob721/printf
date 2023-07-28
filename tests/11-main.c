@@ -26,28 +26,35 @@ int main(void)
 	i = 0;
 
 	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	_printf("zero only \n");
 	sum = _printf("[%0d]\n", 7284);
 	printf("[Got]: %d\n", sum);
 	sum = printf("[%0d]\n", 7284);
 	printf("[Exp]: %d\n", sum);
 
 	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	_printf("width + zero\n");
 	sum = _printf("[%07d]\n", 7284);
 	printf("[Got]: %d\n", sum);
 	sum = printf("[%07d]\n", 7284);
 	printf("[Exp]: %d\n", sum);
 
 	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	_printf("width + zero + space (+ve number)\n");
+	sum = _printf("[% 07d]\n", 7284);
+	printf("[Got]: %d\n", sum);
+	sum = printf("[% 07d]\n", 7284);
+	printf("[Exp]: %d\n", sum);
+
+	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	_printf("width + zero (-ve number)\n");
 	sum = _printf("[%07d]\n", -7284);
 	printf("[Got]: %d\n", sum);
 	sum = printf("[%07d]\n", -7284);
 	printf("[Exp]: %d\n", sum);
 
-	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
-	sum = _printf("[%.7d]\n", -7284);
-	printf("[Got]: %d\n", sum);
-	sum = printf("[%.7d]\n", -7284);
-	printf("[Exp]: %d\n", sum);
+	_printf("zero and minus = don't work (zero is ignored)\n");
+	_printf("zero and precision = don't work (zero is ignored)\n");
 
 	_printf("\n------------------------------------------------------------\n");
 	_printf("                          UNSIGNED                            \n");
@@ -72,17 +79,25 @@ int main(void)
 	i = 0;
 
 	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	_printf("zero\n");
 	sum = _printf("[%0o]\n", 7284);
 	printf("[Got]: %d\n", sum);
 	sum = printf("[%0o]\n", 7284);
 	printf("[Exp]: %d\n", sum);
 
 	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	_printf("width + zero\n");
 	sum = _printf("[%07o]\n", 7284);
 	printf("[Got]: %d\n", sum);
 	sum = printf("[%07o]\n", 7284);
 	printf("[Exp]: %d\n", sum);
 
+	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	_printf("width + zero + hash\n");
+	sum = _printf("[%0#7o]\n", 7284);
+	printf("[Got]: %d\n", sum);
+	sum = printf("[%0#7o]\n", 7284);
+	printf("[Exp]: %d\n", sum);
 
 	_printf("\n------------------------------------------------------------\n");
 	_printf("                        HEXADECIMAl                           \n");
@@ -90,16 +105,26 @@ int main(void)
 	i = 0;
 
 	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	_printf("zero\n");
 	sum = _printf("[%0x]\n", 7284);
 	printf("[Got]: %d\n", sum);
 	sum = printf("[%0x]\n", 7284);
 	printf("[Exp]: %d\n", sum);
 
 	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	_printf("width + zero\n");
 	sum = _printf("[%07x]\n", 7284);
 	printf("[Got]: %d\n", sum);
 	sum = printf("[%07x]\n", 7284);
 	printf("[Exp]: %d\n", sum);
+
+	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	_printf("width + zero + hash\n");
+	sum = _printf("[%0#7x]\n", 7284);
+	printf("[Got]: %d\n", sum);
+	sum = printf("[%0#7x]\n", 7284);
+	printf("[Exp]: %d\n", sum);
+
 
 	return (0);
 }

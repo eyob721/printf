@@ -30,6 +30,6 @@ int handle_octal(fmt_data_t *f, char *buf, int *ctr)
 	if (f->hash_flag == 1 && num != 0)
 		*(--oct_str) = '0';
 
-	printed_chars += print_integer_format(oct_str, f, buf, ctr);
+	printed_chars += print_unsigned_format(oct_str, f, buf, ctr);
 	return (printed_chars);
 }

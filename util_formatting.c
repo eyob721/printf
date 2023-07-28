@@ -31,9 +31,9 @@ int print_char_format(char *str, fmt_data_t *f, char *buf, int *ctr)
 	_memset(fmt_str, ' ', f->width);
 
 	if (f->minus_flag == 1)
-		write_format_justify_left(fmt_str, f->width, str, _strlen(str));
+		write_format_justify('l', fmt_str, f->width, str, _strlen(str));
 	else
-		write_format_justify_right(fmt_str, f->width, str, _strlen(str));
+		write_format_justify('r', fmt_str, f->width, str, _strlen(str));
 
 	printed_chars += _puts_nbytes_buf(fmt_str, f->width, buf, ctr);
 	free(fmt_str);
@@ -81,9 +81,9 @@ int print_string_format(char *str, fmt_data_t *f, char *buf, int *ctr)
 	_memset(fmt_str, ' ', f->width);
 
 	if (f->minus_flag == 1)
-		write_format_justify_left(fmt_str, f->width, str, max_len);
+		write_format_justify('l', fmt_str, f->width, str, max_len);
 	else
-		write_format_justify_right(fmt_str, f->width, str, max_len);
+		write_format_justify('r', fmt_str, f->width, str, max_len);
 
 	printed_chars += _puts_nbytes_buf(fmt_str, f->width, buf, ctr);
 	free(fmt_str);
@@ -143,9 +143,9 @@ int print_integer_format(char *int_str, fmt_data_t *f, char *buf, int *ctr)
 	fmt_str[fmt_size] = '\0';
 	_memset(fmt_str, pad, fmt_size);
 	if (f->minus_flag == 1)
-		write_format_justify_left(fmt_str, fmt_size, int_str, len);
+		write_format_justify('l', fmt_str, fmt_size, int_str, len);
 	else
-		write_format_justify_right(fmt_str, fmt_size, int_str, len);
+		write_format_justify('r', fmt_str, fmt_size, int_str, len);
 	if (pad == '0')
 		*fmt_str = sign;
 	printed_chars += _puts_nbytes_buf(fmt_str, fmt_size, buf, ctr);
@@ -154,34 +154,51 @@ int print_integer_format(char *int_str, fmt_data_t *f, char *buf, int *ctr)
 }
 
 /**
- * write_format_justify_right - a function writes a string on the allocated
- *								format string, justified to the right
- * @fmt_str: format string
- * @str: string to written on format string
- * @size: size of the format string
- * @len: length of the string to be written 'str'
+ * print_unsigned_format - a function that formats an unsigned integer and
+ *						   writes it to the format buffer.
+ * @int_str: an unsigned string to be formatted
+ * @f: pointer to the format data
+ * @buf: a pointer to the format buffer
+ * @ctr: current index/counter in the buffer
  *
- * Return: void
- * Description: In case of an empty string, it also must be printed on the
- *				format string.
+ * Return: number of characters printed
+ * Description:
+ *		- Unsigned integer formatting includes octal, hexadecimal and pointers
  */
-void write_format_justify_right(char *fmt_str, int size, char *str, int len)
+int print_unsigned_format(char *uint_str, fmt_data_t *f, char *buf, int *ctr)
 {
-	/* If 'str' is an empty string, write it on 'fmt_str' */
-	if (*str == '\0')
-	{
-		fmt_str[size - 1] = *str;
-		return;
-	}
+	int printed_chars = 0, len = _strlen(uint_str);
+	int fmt_size = MAX(f->width, f->precision);
+	char pad = ' ';
+	char *fmt_str;
 
-	/* If 'str' is not empty, write it from right to left on 'fmt_str' */
-	for (--len; len >= 0 && size >= 0; --len, --size)
-		fmt_str[size - 1] = str[len];
+	/* Check if formatting is needed */
+	if (fmt_size < len)
+	{
+		printed_chars += _puts_buf(uint_str, buf, ctr);
+		return (printed_chars);
+	}
+	/* Format output */
+	if (fmt_size == f->precision || f->zero_flag == 1)
+		pad = '0';
+	fmt_str = malloc(sizeof(char) * (fmt_size + 1)); /* +1 for '\0' */
+	if (fmt_str == NULL)
+		return (0);
+	fmt_str[fmt_size] = '\0';
+	_memset(fmt_str, pad, fmt_size);
+	if (f->minus_flag == 1)
+		write_format_justify('l', fmt_str, fmt_size, uint_str, len);
+	else
+		write_format_justify('r', fmt_str, fmt_size, uint_str, len);
+	printed_chars += _puts_nbytes_buf(fmt_str, fmt_size, buf, ctr);
+	free(fmt_str);
+	return (printed_chars);
 }
 
 /**
- * write_format_justify_left - a function writes a string on the allocated
- *							   format string, justified to the left
+ * write_format_justify - a function writes a string on the allocated
+ *						  format string, justified to the right or left
+ * @justify: justification option, right or left
  * @fmt_str: format string
  * @str: string to written on format string
  * @size: size of the format string
@@ -191,16 +208,33 @@ void write_format_justify_right(char *fmt_str, int size, char *str, int len)
  * Description: In case of an empty string, it also must be printed on the
  *				format string.
  */
-void write_format_justify_left(char *fmt_str, int size, char *str, int len)
+void write_format_justify(char justify, char *fmt_str, int size, char *str, int len)
 {
-	/* If 'str' is an empty string, write it on 'fmt_str' */
-	if (*str == '\0')
+	switch (justify)
 	{
-		fmt_str[size - 1] = *str;
-		return;
-	}
+	case 'r':
+		/* If 'str' is an empty string, write it on 'fmt_str' */
+		if (*str == '\0')
+		{
+			fmt_str[size - 1] = *str;
+			return;
+		}
 
-	/* If 'str' is not empty, write it from left to right on 'fmt_str' */
-	for (--len; len >= 0 && size >= 0; --len, --size)
-		*(fmt_str++) = *(str++);
+		/* If 'str' is not empty, write it from right to left on 'fmt_str' */
+		for (--len; len >= 0 && size >= 0; --len, --size)
+			fmt_str[size - 1] = str[len];
+	break;
+	case 'l':
+		/* If 'str' is an empty string, write it on 'fmt_str' */
+		if (*str == '\0')
+		{
+			*fmt_str = *str;
+			return;
+		}
+
+		/* If 'str' is not empty, write it from left to right on 'fmt_str' */
+		for (--len; len >= 0 && size >= 0; --len, --size)
+			*(fmt_str++) = *(str++);
+	break;
+	}
 }
