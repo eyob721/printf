@@ -19,10 +19,9 @@
 char *convert_int_to_str(long int num, char *buf, int buf_size)
 {
 	char *start, *digit = "0123456789";
-	int i = buf_size - 1, rem, is_negative;
+	int i = buf_size - 1, rem;
 
 	buf[i] = '\0';
-	is_negative = num < 0 ? 1 : 0;
 	do {
 		--i;
 		rem = _abs(num % 10);
@@ -30,11 +29,9 @@ char *convert_int_to_str(long int num, char *buf, int buf_size)
 		start = buf + i;
 		num /= 10;
 	} while (num != 0 && i >= 0);
-	if (is_negative && i >= 0)
-	{
-		buf[--i] = '-';
-		start = buf + i;
-	}
+
+	/* signs/prefixs are handled in formatting */
+
 	return (start);
 }
 

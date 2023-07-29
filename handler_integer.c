@@ -13,7 +13,8 @@ int handle_integer(fmt_data_t *f, char *buf, int *ctr)
 {
 	int printed_chars = 0;
 	long int num;
-	char *int_str, int_buf[INT_BUF_SIZE] = "#####################";
+	char *int_fmt, prefix[2] = {0};
+	char *int_str, int_buf[INT_BUF_SIZE] = "####################";
 
 	if (f->modifier == 'h')
 		num = (short)va_arg(f->args, int);
@@ -22,17 +23,23 @@ int handle_integer(fmt_data_t *f, char *buf, int *ctr)
 	else
 		num = (int)va_arg(f->args, int);
 
+	if (num < 0)
+		*prefix = '-';
+	else if (f->plus_flag == 1 && num >= 0)
+		*prefix = '+';
+	else if (f->blank_flag == 1 && num >= 0)
+		*prefix = ' ';
+
 	/* If both precision and num are zero, then no need for formatting */
 	if (f->precision == 0 && num == 0)
-		return (0);
+		int_str = "";
+	else
+		int_str = convert_int_to_str(num, int_buf, INT_BUF_SIZE);
 
-	int_str = convert_int_to_str(num, int_buf, INT_BUF_SIZE);
+	int_fmt = format_integer(int_str, prefix, f);
 
-	if (f->plus_flag == 1 && num >= 0)
-		*(--int_str) = '+';
-	else if (f->blank_flag == 1 && num >= 0)
-		*(--int_str) = ' ';
+	printed_chars += _puts_buf(int_fmt, buf, ctr);
 
-	printed_chars += print_integer_format(int_str, f, buf, ctr);
+	free(int_fmt);
 	return (printed_chars);
 }

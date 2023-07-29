@@ -12,6 +12,7 @@ int handle_unsigned(fmt_data_t *f, char *buf, int *ctr)
 {
 	int printed_chars = 0;
 	unsigned long int num;
+	char *uint_fmt;
 	char *uint_str, uint_buf[UINT_BUF_SIZE] = "#####################";
 
 	if (f->modifier == 'h')
@@ -23,11 +24,14 @@ int handle_unsigned(fmt_data_t *f, char *buf, int *ctr)
 
 	/* If both precision and num are zero, then you do nothing */
 	if (f->precision == 0 && num == 0)
-		return (0);
+		uint_str = "";
+	else
+		uint_str = convert_uint_to_base_str(10, num, 'l', uint_buf, UINT_BUF_SIZE);
 
-	uint_str = convert_uint_to_base_str(10, num, 'l', uint_buf, UINT_BUF_SIZE);
+	uint_fmt = format_integer(uint_str, "", f);
 
-	printed_chars += print_unsigned_format(uint_str, f, buf, ctr);
+	printed_chars += _puts_buf(uint_fmt, buf, ctr);
+	free(uint_fmt);
 	return (printed_chars);
 }
 

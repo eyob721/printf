@@ -12,6 +12,7 @@ int handle_octal(fmt_data_t *f, char *buf, int *ctr)
 {
 	int printed_chars = 0;
 	unsigned long int num;
+	char *oct_fmt, prefix[2] = {0};
 	char *oct_str, oct_buf[OCT_BUF_SIZE] = "########################";
 
 	if (f->modifier == 'h')
@@ -21,15 +22,18 @@ int handle_octal(fmt_data_t *f, char *buf, int *ctr)
 	else
 		num = (unsigned int)va_arg(f->args, unsigned int);
 
+	if (f->hash_flag == 1 && num != 0)
+		*prefix = '0';
+
 	/* If both precision and num are zero, then you do nothing */
 	if (f->precision == 0 && num == 0)
-		return (0);
+		oct_str = "";
+	else
+		oct_str = convert_uint_to_base_str(8, num, 'l', oct_buf, OCT_BUF_SIZE);
 
-	oct_str = convert_uint_to_base_str(8, num, 'l', oct_buf, OCT_BUF_SIZE);
+	oct_fmt = format_integer(oct_str, prefix, f);
 
-	if (f->hash_flag == 1 && num != 0)
-		*(--oct_str) = '0';
-
-	printed_chars += print_unsigned_format(oct_str, f, buf, ctr);
+	printed_chars += _puts_buf(oct_fmt, buf, ctr);
+	free(oct_fmt);
 	return (printed_chars);
 }

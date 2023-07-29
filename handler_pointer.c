@@ -12,6 +12,7 @@
 int handle_pointer(fmt_data_t *f, char *buf, int *ctr)
 {
 	int printed_chars = 0;
+	char *ptr_fmt;
 	char *ptr_str, ptr_buf[PTR_BUF_SIZE] = "################";
 	void *addr = va_arg(f->args, void *);
 
@@ -19,6 +20,9 @@ int handle_pointer(fmt_data_t *f, char *buf, int *ctr)
 		ptr_str = "(nil)";
 	else
 		ptr_str = convert_addr_to_hex_str(addr, ptr_buf, PTR_BUF_SIZE);
-	printed_chars += print_unsigned_format(ptr_str, f, buf, ctr);
+
+	ptr_fmt = format_integer(ptr_str, "", f);
+	printed_chars += _puts_buf(ptr_fmt, buf, ctr);
+	free(ptr_fmt);
 	return (printed_chars);
 }

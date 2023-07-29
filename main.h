@@ -11,8 +11,8 @@
 #define NORMAL 0
 #define CONVERSION 1
 
-/* 21 = 19 (max no of digits for LONG_SIGNED) + 1 (-/+ sign) + 1 (for '\0') */
-#define INT_BUF_SIZE 21
+/* 20 = 19 (max no of digits for LONG_SIGNED) + 1 (for '\0') */
+#define INT_BUF_SIZE 20
 /* 24 = 22 (max no of digits for LONG_UNSIGNED) + 1 (for '0') + 1 (for '\0') */
 #define OCT_BUF_SIZE 24
 /* 19 = 16 (max no of digits LONG_UNSIGNED) + 2 (for "0x") + 1 (for '\0') */
@@ -55,6 +55,30 @@ typedef struct format_data
 	char *invalid_spc;
 } fmt_data_t;
 
+/**
+ * struct format_output_data - data structure to hold data for formatting
+ *							   converted string output
+ * @fmt_out: pointer to the formatted output string
+ * @str: converted string, to be formatted
+ * @pre: prefix of the converted string (i.e. minus and plus signs, or '0x'
+ *		 prefixes for hexadecimal strings, ... e.t.c)
+ * @fmt_len: length of the format output
+ * @str_len: length of the converted string
+ * @pre_len: length of the prefix string
+ * @pad: padding character
+ * @jst: justification of the formatted output
+ */
+typedef struct format_output_data
+{
+	char *fmt_out;
+	char *str;
+	char *pre;
+	int fmt_len;
+	int str_len;
+	int pre_len;
+	char pad;
+	int jst;
+} fmt_out_data_t;
 /**
  * struct format_handler - data structure for conversion event
  *						   handler functions
@@ -146,5 +170,9 @@ int handle_custom_string(fmt_data_t *f, char *buf, int *ctr);
 int handle_custom_binary(fmt_data_t *f, char *buf, int *ctr);
 int handle_custom_reverse_string(fmt_data_t *f, char *buf, int *ctr);
 int handle_custom_rot13(fmt_data_t *f, char *buf, int *ctr);
+
+/* New formatting */
+char *format_integer(char *int_str, char *prefix, fmt_data_t *f);
+void write_format_output(fmt_out_data_t *fod_ptr);
 
 #endif
