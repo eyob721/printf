@@ -24,16 +24,16 @@ int handle_hexadecimal(fmt_data_t *f, char *buf, int *ctr)
 
 	if (f->spc_chr == 'X' && f->hash_flag == 1)
 		prefix[1] = 'X';
-	else if (f->hash_flag == 0)
+	else if (f->hash_flag == 0 || num == 0)
 		prefix[0] = '\0';
 
 	/* If both precision and num are zero, then you do nothing */
 	if (f->precision == 0 && num == 0)
-		hex_str = "";
-	else
-		hex_str = convert_uint_to_base_str(16, num, ltr, hex_buf, HEX_BUF_SIZE);
+		return (0);
 
-	hex_fmt = format_integer(hex_str, prefix, f);
+	hex_str = convert_uint_to_base_str(16, num, ltr, hex_buf, HEX_BUF_SIZE);
+
+	hex_fmt = format_integer_output(hex_str, prefix, f);
 
 	printed_chars += _puts_buf(hex_fmt, buf, ctr);
 	free(hex_fmt);

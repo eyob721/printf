@@ -28,57 +28,57 @@ int main(void)
 	/* sum = printf("[%7.10c]\n", 0); */
 	/* printf("[Exp]: %d\n", sum); */
 
-	/* _printf("\n------------------------------------------------------------\n"); */
-	/* _printf("                          STRING                              \n"); */
-	/* _printf("--------------------------------------------------------------\n"); */
+	_printf("\n------------------------------------------------------------\n");
+	_printf("                          STRING                              \n");
+	_printf("--------------------------------------------------------------\n");
 
-	/* printf("\nTest-%i:\n-----------------------------------------------\n", i++); */
-	/* sum = _printf("[%.7s]\n", "Alx"); */
-	/* printf("[Got]: %d\n", sum); */
-	/* sum = printf("[%.7s]\n", "Alx"); */
-	/* printf("[Exp]: %d\n", sum); */
+	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	sum = _printf("[%.7s]\n", "Alx");
+	printf("[Got]: %d\n", sum);
+	sum = printf("[%.7s]\n", "Alx");
+	printf("[Exp]: %d\n", sum);
 
-	/* printf("\nTest-%i:\n-----------------------------------------------\n", i++); */
-	/* sum = _printf("[%.2s]\n", "Alx"); */
-	/* printf("[Got]: %d\n", sum); */
-	/* sum = printf("[%.2s]\n", "Alx"); */
-	/* printf("[Exp]: %d\n", sum); */
+	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	sum = _printf("[%.2s]\n", "Alx");
+	printf("[Got]: %d\n", sum);
+	sum = printf("[%.2s]\n", "Alx");
+	printf("[Exp]: %d\n", sum);
 
-	/* printf("\nTest-%i:\n-----------------------------------------------\n", i++); */
-	/* sum = _printf("[%5.2s]\n", "Alx"); */
-	/* printf("[Got]: %d\n", sum); */
-	/* sum = printf("[%5.2s]\n", "Alx"); */
-	/* printf("[Exp]: %d\n", sum); */
+	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	sum = _printf("[%5.2s]\n", "Alx");
+	printf("[Got]: %d\n", sum);
+	sum = printf("[%5.2s]\n", "Alx");
+	printf("[Exp]: %d\n", sum);
 
-	/* printf("\nTest-%i:\n-----------------------------------------------\n", i++); */
-	/* sum = _printf("[%.0s]\n", "Alx"); */
-	/* printf("[Got]: %d\n", sum); */
-	/* sum = printf("[%.0s]\n", "Alx"); */
-	/* printf("[Exp]: %d\n", sum); */
+	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	sum = _printf("[%.0s]\n", "Alx");
+	printf("[Got]: %d\n", sum);
+	sum = printf("[%.0s]\n", "Alx");
+	printf("[Exp]: %d\n", sum);
 
-	/* printf("\nTest-%i:\n-----------------------------------------------\n", i++); */
-	/* sum = _printf("[%5.2s]\n", "Alx is awesome"); */
-	/* printf("[Got]: %d\n", sum); */
-	/* sum = printf("[%5.2s]\n", "Alx is awesome"); */
-	/* printf("[Exp]: %d\n", sum); */
+	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	sum = _printf("[%5.2s]\n", "Alx is awesome");
+	printf("[Got]: %d\n", sum);
+	sum = printf("[%5.2s]\n", "Alx is awesome");
+	printf("[Exp]: %d\n", sum);
 
-	/* printf("\nTest-%i:\n-----------------------------------------------\n", i++); */
-	/* sum = _printf("[%.7s]\n", "Best School !\n"); */
-	/* printf("[Got]: %d\n", sum); */
-	/* sum = printf("[%.7s]\n", "Best School !\n"); */
-	/* printf("[Exp]: %d\n", sum); */
+	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	sum = _printf("[%.7s]\n", "Best School !\n");
+	printf("[Got]: %d\n", sum);
+	sum = printf("[%.7s]\n", "Best School !\n");
+	printf("[Exp]: %d\n", sum);
 
-	/* printf("\nTest-%i:\n-----------------------------------------------\n", i++); */
-	/* sum = _printf("[%.*s]\n", 7, "Best School !\n"); */
-	/* printf("[Got]: %d\n", sum); */
-	/* sum = printf("[%.*s]\n", 7, "Best School !\n"); */
-	/* printf("[Exp]: %d\n", sum); */
+	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	sum = _printf("[%.*s]\n", 7, "Best School !\n");
+	printf("[Got]: %d\n", sum);
+	sum = printf("[%.*s]\n", 7, "Best School !\n");
+	printf("[Exp]: %d\n", sum);
 
-	/* printf("\nTest-%i:\n-----------------------------------------------\n", i++); */
-	/* sum = _printf("[%.*s]\n", 7, "Hi!\n"); */
-	/* printf("[Got]: %d\n", sum); */
-	/* sum = printf("[%.*s]\n", 7, "Hi!\n"); */
-	/* printf("[Exp]: %d\n", sum); */
+	printf("\nTest-%i:\n-----------------------------------------------\n", i++);
+	sum = _printf("[%.*s]\n", 7, "Hi!\n");
+	printf("[Got]: %d\n", sum);
+	sum = printf("[%.*s]\n", 7, "Hi!\n");
+	printf("[Exp]: %d\n", sum);
 
 	_printf("\n------------------------------------------------------------\n");
 	_printf("                          INTEGER                             \n");

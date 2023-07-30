@@ -141,12 +141,10 @@ int _putchar_buf(char c, char *buf, int *ctr);
 int _puts_buf(char *str, char *buf, int *ctr);
 int _puts_nbytes_buf(char *str, int n, char *buf, int *ctr);
 
-/* Formatting utilities */
-int print_char_format(char *str, fmt_data_t *f, char *buf, int *ctr);
-int print_string_format(char *str, fmt_data_t *f, char *buf, int *ctr);
-int print_integer_format(char *int_str, fmt_data_t *f, char *buf, int *ctr);
-int print_unsigned_format(char *uint_str, fmt_data_t *f, char *buf, int *ctr);
-void write_format_justify(char justify, char *fmt_str, int size, char *str, int len);
+/* NEW Formatting utilities */
+char *format_character_output(char *str, int *fmt_len, fmt_data_t *f);
+char *format_integer_output(char *int_str, char *prefix, fmt_data_t *f);
+void write_format_output(fmt_out_data_t *fod_ptr);
 
 /* _printf implementation function */
 int _printf(const char *format, ...);
@@ -170,9 +168,5 @@ int handle_custom_string(fmt_data_t *f, char *buf, int *ctr);
 int handle_custom_binary(fmt_data_t *f, char *buf, int *ctr);
 int handle_custom_reverse_string(fmt_data_t *f, char *buf, int *ctr);
 int handle_custom_rot13(fmt_data_t *f, char *buf, int *ctr);
-
-/* New formatting */
-char *format_integer(char *int_str, char *prefix, fmt_data_t *f);
-void write_format_output(fmt_out_data_t *fod_ptr);
 
 #endif

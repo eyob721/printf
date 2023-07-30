@@ -32,11 +32,11 @@ int handle_integer(fmt_data_t *f, char *buf, int *ctr)
 
 	/* If both precision and num are zero, then no need for formatting */
 	if (f->precision == 0 && num == 0)
-		int_str = "";
-	else
-		int_str = convert_int_to_str(num, int_buf, INT_BUF_SIZE);
+		return (0);
 
-	int_fmt = format_integer(int_str, prefix, f);
+	int_str = convert_int_to_str(num, int_buf, INT_BUF_SIZE);
+
+	int_fmt = format_integer_output(int_str, prefix, f);
 
 	printed_chars += _puts_buf(int_fmt, buf, ctr);
 

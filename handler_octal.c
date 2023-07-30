@@ -27,11 +27,11 @@ int handle_octal(fmt_data_t *f, char *buf, int *ctr)
 
 	/* If both precision and num are zero, then you do nothing */
 	if (f->precision == 0 && num == 0)
-		oct_str = "";
-	else
-		oct_str = convert_uint_to_base_str(8, num, 'l', oct_buf, OCT_BUF_SIZE);
+		return (0);
 
-	oct_fmt = format_integer(oct_str, prefix, f);
+	oct_str = convert_uint_to_base_str(8, num, 'l', oct_buf, OCT_BUF_SIZE);
+
+	oct_fmt = format_integer_output(oct_str, prefix, f);
 
 	printed_chars += _puts_buf(oct_fmt, buf, ctr);
 	free(oct_fmt);

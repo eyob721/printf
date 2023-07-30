@@ -21,7 +21,7 @@ int handle_pointer(fmt_data_t *f, char *buf, int *ctr)
 	else
 		ptr_str = convert_addr_to_hex_str(addr, ptr_buf, PTR_BUF_SIZE);
 
-	ptr_fmt = format_integer(ptr_str, "", f);
+	ptr_fmt = format_integer_output(ptr_str, "", f);
 	printed_chars += _puts_buf(ptr_fmt, buf, ctr);
 	free(ptr_fmt);
 	return (printed_chars);

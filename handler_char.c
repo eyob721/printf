@@ -10,9 +10,12 @@
  */
 int handle_char(fmt_data_t *f, char *buf, int *ctr)
 {
-	int printed_chars = 0;
-	char ch = va_arg(f->args, int);
+	int len, printed_chars = 0;
+	char *chr_fmt, chr = va_arg(f->args, int);
 
-	printed_chars += print_char_format(&ch, f, buf, ctr);
+	chr_fmt = format_character_output(&chr, &len, f);
+
+	printed_chars += _puts_nbytes_buf(chr_fmt, len, buf, ctr);
+	free(chr_fmt);
 	return (printed_chars);
 }
