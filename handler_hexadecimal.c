@@ -12,7 +12,7 @@ int handle_hexadecimal(fmt_data_t *f, char *buf, int *ctr)
 {
 	int printed_chars = 0;
 	unsigned long int num;
-	char *hex_fmt, prefix[3] = "0x", ltr = f->spc_chr == 'x' ? 'x' : 'X';
+	char *hex_fmt, prefix[3] = "0x", ltr = f->spc_chr == 'x' ? 'l' : 'C';
 	char *hex_str, hex_buf[HEX_BUF_SIZE] = "###################";
 
 	if (f->modifier == 'h')
