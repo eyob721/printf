@@ -19,7 +19,7 @@ int handle_string(fmt_data_t *f, char *buf, int *ctr)
 
 	str_fmt = format_character_output(str, &len, f);
 
-	printed_chars += _puts_nbytes_buf(str_fmt, len, buf, ctr);
+	printed_chars += _puts_buf(str_fmt, buf, ctr);
 	free(str_fmt);
 	return (printed_chars);
 }

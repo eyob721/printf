@@ -7,6 +7,10 @@
  * @ctr: current index/counter in the buffer
  *
  * Return: number of characters printed to stdout
+ * Description:
+ *		- In selecting the letter case,
+ *			'l' is for lowercase letter case
+ *			'C' is for Capital letter case
  */
 int handle_hexadecimal(fmt_data_t *f, char *buf, int *ctr)
 {
