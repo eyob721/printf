@@ -49,9 +49,49 @@ char *format_character_output(char *str, int *fmt_len, fmt_data_t *f)
 	/* Step 4: Write format output */
 	fod.fmt_out[fod.fmt_len] = '\0';
 	_memset(fod.fmt_out, fod.pad, fod.fmt_len);
-	write_format_output(&fod);
-	*fmt_len = fod.fmt_len;
+	write_character_format(&fod);
+	if (fmt_len != NULL)
+		*fmt_len = fod.fmt_len;
 	return (fod.fmt_out);
+}
+
+/**
+ * write_character_format - used to write the given string on the newly
+ *							allocated format output, based on the formatting
+ *							preferences (i.e. justification and padding)
+ * @fop: pointer to the format output data
+ *
+ * Return: void
+ * Description: In case of an empty string, it also must be printed on the
+ *				format output.
+ */
+void write_character_format(fmt_out_data_t *fop)
+{
+	/**
+	 * If the converted string is an empty string,
+	 * then you must write the null byte and count it as well
+	 */
+	if (*(fop->str) == '\0')
+	{
+		fop->fmt_len = fop->fmt_len != 0 ? fop->fmt_len - 1 : 0;
+		fop->fmt_out[fop->fmt_len] = '\0';
+		fop->fmt_len++;
+		return;
+	}
+	/* For default blank padding */
+	switch (fop->jst)
+	{
+		case 'l':
+			_memcpy(fop->fmt_out, fop->pre, fop->pre_len);
+			_memcpy(fop->fmt_out + fop->pre_len, fop->str, fop->str_len);
+		break;
+		case 'r':
+			_memcpy(fop->fmt_out + (fop->fmt_len - (fop->pre_len + fop->str_len)),
+					fop->pre, fop->pre_len);
+			_memcpy(fop->fmt_out + (fop->fmt_len - fop->str_len),
+					fop->str, fop->str_len);
+		break;
+	}
 }
 
 /**
@@ -76,6 +116,7 @@ char *format_integer_output(char *str, char *prefix, fmt_data_t *f)
 	fod.pre_len = _strlen(prefix);
 	fod.pad = ' ';
 	fod.jst = 'r';
+	fod.prc = f->precision;
 
 	/* Step 1: Determine format output length */
 	int_len = fod.str_len + fod.pre_len;
@@ -98,12 +139,12 @@ char *format_integer_output(char *str, char *prefix, fmt_data_t *f)
 	/* Step 4: Write format output */
 	fod.fmt_out[fod.fmt_len] = '\0';
 	_memset(fod.fmt_out, fod.pad, fod.fmt_len);
-	write_format_output(&fod);
+	write_integer_format(&fod);
 	return (fod.fmt_out);
 }
 
 /**
- * write_format_output - used to write the given string on the newly allocated
+ * write_integer_format - used to write the given string on the newly allocated
  *						 format output, based on the formatting preferences
  *						 i.e. justification and padding
  * @fop: pointer to the format output data
@@ -112,41 +153,48 @@ char *format_integer_output(char *str, char *prefix, fmt_data_t *f)
  * Description: In case of an empty string, it also must be printed on the
  *				format output.
  */
-void write_format_output(fmt_out_data_t *fop)
+void write_integer_format(fmt_out_data_t *fop)
 {
-	/**
-	 * If the converted string is an empty string,
-	 * then you must write the null byte and count it as well
-	 */
-	if (*(fop->str) == '\0')
+	int pre_pos; /* prefix position */
+	int str_pos; /* string position */
+	int prc_pos;
+
+	/* First determine the positions of the prefix and integer string */
+	if (fop->pad == '0') /* For zero padding */
 	{
-		fop->fmt_len = fop->fmt_len != 0 ? fop->fmt_len - 1 : 0;
-		fop->fmt_out[fop->fmt_len] = '\0';
-		fop->fmt_len++;
-		return;
+		pre_pos = 0;
+		str_pos = fop->fmt_len - fop->str_len;
 	}
-	/* For zero padding */
-	if (fop->pad == '0')
-	{
-		_memcpy(fop->fmt_out, fop->pre, fop->pre_len);
-		_memcpy(fop->fmt_out + (fop->fmt_len - fop->str_len),
-				fop->str, fop->str_len);
-		return;
-	}
-	/* For default blank padding */
-	switch (fop->jst)
-	{
-		case 'l':
-			_memcpy(fop->fmt_out, fop->pre, fop->pre_len);
-			_memcpy(fop->fmt_out + fop->pre_len, fop->str, fop->str_len);
-		break;
-		case 'r':
-			_memcpy(fop->fmt_out + (fop->fmt_len - (fop->pre_len + fop->str_len)),
-					fop->pre, fop->pre_len);
-			_memcpy(fop->fmt_out + (fop->fmt_len - fop->str_len),
-					fop->str, fop->str_len);
-		break;
-	}
+	else
+		switch (fop->jst) /* For default blank padding */
+		{
+			case 'l':
+				pre_pos = 0;
+				if (fop->prc > 0)
+				{
+					prc_pos = pre_pos + fop->pre_len;
+					str_pos = prc_pos + (fop->prc - fop->str_len);
+					_memset(fop->fmt_out + prc_pos, '0', fop->prc);
+					break;
+				}
+				str_pos = fop->pre_len;
+			break;
+			case 'r':
+				if (fop->prc > 0)
+				{
+					pre_pos = fop->fmt_len - (fop->pre_len + fop->prc);
+					prc_pos = pre_pos + fop->pre_len;
+					str_pos = prc_pos + (fop->prc - fop->str_len);
+					_memset(fop->fmt_out + prc_pos, '0', fop->prc);
+					break;
+				}
+				pre_pos = fop->fmt_len - (fop->pre_len + fop->str_len);
+				str_pos = fop->fmt_len - fop->str_len;
+			break;
+		}
+	/* Write prefix and integer string */
+	_memcpy(fop->fmt_out + pre_pos, fop->pre, fop->pre_len);
+	_memcpy(fop->fmt_out + str_pos, fop->str, fop->str_len);
 }
 
 /*

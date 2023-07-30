@@ -67,6 +67,7 @@ typedef struct format_data
  * @pre_len: length of the prefix string
  * @pad: padding character
  * @jst: justification of the formatted output
+ * @prc: the given precision value
  */
 typedef struct format_output_data
 {
@@ -78,6 +79,7 @@ typedef struct format_output_data
 	int pre_len;
 	char pad;
 	int jst;
+	int prc;
 } fmt_out_data_t;
 /**
  * struct format_handler - data structure for conversion event
@@ -143,8 +145,9 @@ int _puts_nbytes_buf(char *str, int n, char *buf, int *ctr);
 
 /* NEW Formatting utilities */
 char *format_character_output(char *str, int *fmt_len, fmt_data_t *f);
+void write_character_format(fmt_out_data_t *fop);
 char *format_integer_output(char *int_str, char *prefix, fmt_data_t *f);
-void write_format_output(fmt_out_data_t *fod_ptr);
+void write_integer_format(fmt_out_data_t *fop);
 
 /* _printf implementation function */
 int _printf(const char *format, ...);

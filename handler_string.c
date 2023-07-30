@@ -11,13 +11,13 @@
  */
 int handle_string(fmt_data_t *f, char *buf, int *ctr)
 {
-	int len, printed_chars = 0;
+	int printed_chars = 0;
 	char *str_fmt, *str = va_arg(f->args, char *);
 
 	if (str == NULL)
 		str = "(null)";
 
-	str_fmt = format_character_output(str, &len, f);
+	str_fmt = format_character_output(str, NULL, f);
 
 	printed_chars += _puts_buf(str_fmt, buf, ctr);
 	free(str_fmt);
