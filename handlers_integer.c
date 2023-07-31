@@ -67,9 +67,9 @@ int handle_unsigned(fmt_data_t *f, char *buf, int *ctr)
 
 	/* If both precision and num are zero, then you do nothing */
 	if (f->precision == 0 && num == 0)
-		return (0);
-
-	uint_str = convert_uint_to_base_str(10, num, 'l', uint_buf, UINT_BUF_SIZE);
+		uint_str = "";
+	else
+		uint_str = convert_uint_to_base_str(10, num, 'l', uint_buf, UINT_BUF_SIZE);
 
 	uint_fmt = format_integer_output(uint_str, "", f);
 
@@ -105,9 +105,9 @@ int handle_octal(fmt_data_t *f, char *buf, int *ctr)
 
 	/* If both precision and num are zero, then you do nothing */
 	if (f->precision == 0 && num == 0)
-		return (0);
-
-	oct_str = convert_uint_to_base_str(8, num, 'l', oct_buf, OCT_BUF_SIZE);
+		oct_str = "";
+	else
+		oct_str = convert_uint_to_base_str(8, num, 'l', oct_buf, OCT_BUF_SIZE);
 
 	oct_fmt = format_integer_output(oct_str, prefix, f);
 
@@ -149,9 +149,9 @@ int handle_hexadecimal(fmt_data_t *f, char *buf, int *ctr)
 
 	/* If both precision and num are zero, then you do nothing */
 	if (f->precision == 0 && num == 0)
-		return (0);
-
-	hex_str = convert_uint_to_base_str(16, num, ltr, hex_buf, HEX_BUF_SIZE);
+		hex_str = "";
+	else
+		hex_str = convert_uint_to_base_str(16, num, ltr, hex_buf, HEX_BUF_SIZE);
 
 	hex_fmt = format_integer_output(hex_str, prefix, f);
 
