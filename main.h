@@ -13,10 +13,10 @@
 
 /* 20 = 19 (max no of digits for LONG_SIGNED) + 1 (for '\0') */
 #define INT_BUF_SIZE 20
-/* 24 = 22 (max no of digits for LONG_UNSIGNED) + 1 (for '0') + 1 (for '\0') */
-#define OCT_BUF_SIZE 24
-/* 19 = 16 (max no of digits LONG_UNSIGNED) + 2 (for "0x") + 1 (for '\0') */
-#define HEX_BUF_SIZE 19
+/* 23 = 22 (max no of digits for LONG_UNSIGNED) + 1 (for '\0') */
+#define OCT_BUF_SIZE 23
+/* 17 = 16 (max no of digits LONG_UNSIGNED) + 1 (for '\0') */
+#define HEX_BUF_SIZE 17
 /* 21 = 20 (max no of digits for LONG_UNSIGNED) + 1 (for '\0') */
 #define UINT_BUF_SIZE 21
 /* 17 = 16 (max no of digits) + 1 (for '\0') */
@@ -56,31 +56,31 @@ typedef struct format_data
 } fmt_data_t;
 
 /**
- * struct format_output_data - data structure to hold data for formatting
- *							   converted string output
- * @fmt_out: pointer to the formatted output string
+ * struct format_field_data - data structure to hold data for formatting
+ *							  converted string output
+ * @fmt_field: pointer to the formatted field
  * @str: converted string, to be formatted
  * @pre: prefix of the converted string (i.e. minus and plus signs, or '0x'
  *		 prefixes for hexadecimal strings, ... e.t.c)
- * @fmt_len: length of the format output
+ * @field_len: length of the format field string
  * @str_len: length of the converted string
  * @pre_len: length of the prefix string
  * @pad: padding character
  * @jst: justification of the formatted output
  * @prc: the given precision value
  */
-typedef struct format_output_data
+typedef struct format_field_data
 {
-	char *fmt_out;
+	char *fmt_field;
 	char *str;
 	char *pre;
-	int fmt_len;
+	int field_len;
 	int str_len;
 	int pre_len;
 	char pad;
 	int jst;
 	int prc;
-} fmt_out_data_t;
+} fmt_field_data_t;
 /**
  * struct format_handler - data structure for conversion event
  *						   handler functions
@@ -93,39 +93,18 @@ typedef struct format_handler
 	int (*handle)(fmt_data_t *, char *, int *);
 } fmt_hndlr_t;
 
-/* Library utilities 1 */
-int _putchar(char c);
-void _puts(char *str);
-int _islower(int c);
-int _isupper(int c);
-
-/* Library utilities 2 */
-int _isalpha(int c);
+/* Library 1 */
 int _isdigit(int c);
 int _abs(int x);
-int _atoi(char *s);
-
-/* Library utilities 3 */
-char *_memset(char *s, char b, unsigned int n);
-char *_memcpy(char *dest, char *src, unsigned int n);
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-char *_strdup(char *str);
-
-/* Library utilities 4 */
 int _strlen(char *s);
-char *_strcpy(char *dest, char *src);
-char *_strncpy(char *dest, char *src, int n);
-char *_strcat(char *dest, char *src);
-char *_strncat(char *dest, char *src, int n);
-
-/* Library utilities 5 */
 int _strcmp(char *s1, char *s2);
 char *_strchr(char *s, char c);
-char *_strstr(char *haystack, char *needle);
-unsigned int _strspn(char *s, char *accept);
-char *_strpbrk(char *s, char *accept);
 
-/* Format option utilities */
+/* Library 2 */
+char *_memset(char *s, char b, unsigned int n);
+char *_memcpy(char *dest, char *src, unsigned int n);
+
+/* Format syntax utilities */
 void check_flag(char **s, fmt_data_t *f);
 void check_width(char **s, fmt_data_t *f);
 void check_precision(char **s, fmt_data_t *f);
@@ -143,11 +122,11 @@ int _putchar_buf(char c, char *buf, int *ctr);
 int _puts_buf(char *str, char *buf, int *ctr);
 int _puts_nbytes_buf(char *str, int n, char *buf, int *ctr);
 
-/* NEW Formatting utilities */
+/* Formatting utilities */
 char *format_character_output(char *str, int *fmt_len, fmt_data_t *f);
-void write_character_format(fmt_out_data_t *fop);
+void write_character_format(fmt_field_data_t *fd);
 char *format_integer_output(char *int_str, char *prefix, fmt_data_t *f);
-void write_integer_format(fmt_out_data_t *fop);
+void write_integer_format(fmt_field_data_t *fd);
 
 /* _printf implementation function */
 int _printf(const char *format, ...);
