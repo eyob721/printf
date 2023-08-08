@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef PRINTF_H
+#define PRINTF_H
 
 #include <stdlib.h>
 #include <stdarg.h>
@@ -28,6 +28,7 @@
 
 /**
  * struct format_data - data structure to hold format data
+ * @fd: file descriptor
  * @args: list of optional arguments given
  * @minus_flag: used to check if - flag is set
  * @plus_flag: used to check if + flag is set
@@ -42,6 +43,7 @@
  */
 typedef struct format_data
 {
+	int fd;
 	va_list args;
 	int minus_flag;
 	int plus_flag;
@@ -118,9 +120,9 @@ char *convert_uint_to_base_str(int base, unsigned long int num, char ltr_case,
 char *convert_addr_to_hex_str(void *addr, char *buf, int buf_size);
 
 /* Buffer utilities */
-int _putchar_buf(char c, char *buf, int *ctr);
-int _puts_buf(char *str, char *buf, int *ctr);
-int _puts_nbytes_buf(char *str, int n, char *buf, int *ctr);
+int _putchar_buf(int fd, char c, char *buf, int *ctr);
+int _puts_buf(int fd, char *str, char *buf, int *ctr);
+int _puts_nbytes_buf(int fd, char *str, int n, char *buf, int *ctr);
 
 /* Formatting utilities */
 char *format_character_output(char *str, int *fmt_len, fmt_data_t *f);
@@ -128,8 +130,10 @@ void write_character_format(fmt_field_data_t *fd);
 char *format_integer_output(char *int_str, char *prefix, fmt_data_t *f);
 void write_integer_format(fmt_field_data_t *fd);
 
-/* _printf implementation function */
+/* printf family implementation functions */
 int _printf(const char *format, ...);
+int _dprintf(int fd, const char *format, ...);
+int _vdprintf(int fd, const char *format, va_list args);
 
 /* _printf function utilities */
 char *get_specifier(char *s, fmt_data_t *f);

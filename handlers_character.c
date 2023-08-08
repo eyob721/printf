@@ -1,4 +1,4 @@
-#include "main.h"
+#include "printf.h"
 
 /**
  * handle_char - handler function for character conversion
@@ -10,12 +10,12 @@
  */
 int handle_char(fmt_data_t *f, char *buf, int *ctr)
 {
-	int len, printed_chars = 0;
+	int len = 0, printed_chars = 0;
 	char *chr_fmt, chr = va_arg(f->args, int);
 
 	chr_fmt = format_character_output(&chr, &len, f);
 
-	printed_chars += _puts_nbytes_buf(chr_fmt, len, buf, ctr);
+	printed_chars += _puts_nbytes_buf(f->fd, chr_fmt, len, buf, ctr);
 	free(chr_fmt);
 	return (printed_chars);
 }
@@ -38,7 +38,7 @@ int handle_string(fmt_data_t *f, char *buf, int *ctr)
 
 	str_fmt = format_character_output(str, NULL, f);
 
-	printed_chars += _puts_buf(str_fmt, buf, ctr);
+	printed_chars += _puts_buf(f->fd, str_fmt, buf, ctr);
 	free(str_fmt);
 	return (printed_chars);
 }
@@ -56,6 +56,6 @@ int handle_percent(fmt_data_t *f, char *buf, int *ctr)
 	int printed_chars = 0;
 
 	(void)f;
-	printed_chars += _putchar_buf('%', buf, ctr);
+	printed_chars += _putchar_buf(f->fd, '%', buf, ctr);
 	return (printed_chars);
 }

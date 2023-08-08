@@ -1,4 +1,4 @@
-#include "main.h"
+#include "printf.h"
 
 /**
  * handle_integer - handler function for signed integer conversion
@@ -37,7 +37,7 @@ int handle_integer(fmt_data_t *f, char *buf, int *ctr)
 
 	int_fmt = format_integer_output(int_str, prefix, f);
 
-	printed_chars += _puts_buf(int_fmt, buf, ctr);
+	printed_chars += _puts_buf(f->fd, int_fmt, buf, ctr);
 
 	free(int_fmt);
 	return (printed_chars);
@@ -73,7 +73,7 @@ int handle_unsigned(fmt_data_t *f, char *buf, int *ctr)
 
 	uint_fmt = format_integer_output(uint_str, "", f);
 
-	printed_chars += _puts_buf(uint_fmt, buf, ctr);
+	printed_chars += _puts_buf(f->fd, uint_fmt, buf, ctr);
 	free(uint_fmt);
 	return (printed_chars);
 }
@@ -111,7 +111,7 @@ int handle_octal(fmt_data_t *f, char *buf, int *ctr)
 
 	oct_fmt = format_integer_output(oct_str, prefix, f);
 
-	printed_chars += _puts_buf(oct_fmt, buf, ctr);
+	printed_chars += _puts_buf(f->fd, oct_fmt, buf, ctr);
 	free(oct_fmt);
 	return (printed_chars);
 }
@@ -155,7 +155,7 @@ int handle_hexadecimal(fmt_data_t *f, char *buf, int *ctr)
 
 	hex_fmt = format_integer_output(hex_str, prefix, f);
 
-	printed_chars += _puts_buf(hex_fmt, buf, ctr);
+	printed_chars += _puts_buf(f->fd, hex_fmt, buf, ctr);
 	free(hex_fmt);
 	return (printed_chars);
 }
@@ -181,7 +181,7 @@ int handle_pointer(fmt_data_t *f, char *buf, int *ctr)
 		ptr_str = convert_addr_to_hex_str(addr, ptr_buf, PTR_BUF_SIZE);
 
 	ptr_fmt = format_integer_output(ptr_str, "", f);
-	printed_chars += _puts_buf(ptr_fmt, buf, ctr);
+	printed_chars += _puts_buf(f->fd, ptr_fmt, buf, ctr);
 	free(ptr_fmt);
 	return (printed_chars);
 }

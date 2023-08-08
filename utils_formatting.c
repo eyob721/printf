@@ -94,7 +94,7 @@
  * ----------------------------------------------------------------------------
  */
 
-#include "main.h"
+#include "printf.h"
 
 /**
  * format_character_output - used to format character and string conversions
