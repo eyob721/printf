@@ -134,6 +134,7 @@ void initialize_format_data(fmt_data_t *f)
 	f->modifier = 0;
 	f->spc_chr = 0;
 	f->invalid_spc = NULL;
+	f->fmt_opts_set = 0;
 }
 
 /**

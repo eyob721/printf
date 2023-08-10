@@ -180,4 +180,6 @@ void check_specifier(char **s, fmt_data_t *f)
 	}
 	f->spc_chr = **s;
 	f->invalid_spc = NULL;
+	/* Check if any format options are set */
+	f->fmt_opts_set = *(*s - 1) == '%' ? 0 : 1;
 }

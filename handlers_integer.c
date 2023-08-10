@@ -35,6 +35,14 @@ int handle_integer(fmt_data_t *f, char *buf, int *ctr)
 	else
 		int_str = convert_int_to_str(num, int_buf, INT_BUF_SIZE);
 
+	if (f->fmt_opts_set == 0) /* Check if formatting is required */
+	{
+		if (*prefix == '-')
+			printed_chars += _putchar_buf(*prefix, buf, ctr);
+		printed_chars += _puts_buf(int_str, buf, ctr);
+		return (printed_chars);
+	}
+
 	int_fmt = format_integer_output(int_str, prefix, f);
 
 	printed_chars += _puts_buf(int_fmt, buf, ctr);
@@ -70,6 +78,12 @@ int handle_unsigned(fmt_data_t *f, char *buf, int *ctr)
 		uint_str = "";
 	else
 		uint_str = convert_uint_to_base_str(10, num, 'l', uint_buf, UINT_BUF_SIZE);
+
+	if (f->fmt_opts_set == 0) /* Check if formatting is required */
+	{
+		printed_chars += _puts_buf(uint_str, buf, ctr);
+		return (printed_chars);
+	}
 
 	uint_fmt = format_integer_output(uint_str, "", f);
 
@@ -108,6 +122,12 @@ int handle_octal(fmt_data_t *f, char *buf, int *ctr)
 		oct_str = "";
 	else
 		oct_str = convert_uint_to_base_str(8, num, 'l', oct_buf, OCT_BUF_SIZE);
+
+	if (f->fmt_opts_set == 0) /* Check if formatting is required */
+	{
+		printed_chars += _puts_buf(oct_str, buf, ctr);
+		return (printed_chars);
+	}
 
 	oct_fmt = format_integer_output(oct_str, prefix, f);
 
@@ -153,6 +173,12 @@ int handle_hexadecimal(fmt_data_t *f, char *buf, int *ctr)
 	else
 		hex_str = convert_uint_to_base_str(16, num, ltr, hex_buf, HEX_BUF_SIZE);
 
+	if (f->fmt_opts_set == 0) /* Check if formatting is required */
+	{
+		printed_chars += _puts_buf(hex_str, buf, ctr);
+		return (printed_chars);
+	}
+
 	hex_fmt = format_integer_output(hex_str, prefix, f);
 
 	printed_chars += _puts_buf(hex_fmt, buf, ctr);
@@ -180,7 +206,14 @@ int handle_pointer(fmt_data_t *f, char *buf, int *ctr)
 	else
 		ptr_str = convert_addr_to_hex_str(addr, ptr_buf, PTR_BUF_SIZE);
 
+	if (f->fmt_opts_set == 0) /* Check if formatting is required */
+	{
+		printed_chars += _puts_buf(ptr_str, buf, ctr);
+		return (printed_chars);
+	}
+
 	ptr_fmt = format_integer_output(ptr_str, "", f);
+
 	printed_chars += _puts_buf(ptr_fmt, buf, ctr);
 	free(ptr_fmt);
 	return (printed_chars);
