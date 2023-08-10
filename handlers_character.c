@@ -15,13 +15,13 @@ int handle_char(fmt_data_t *f, char *buf, int *ctr)
 
 	if (f->fmt_opts_set == 0) /* Check if formatting is required */
 	{
-		printed_chars += _putchar_buf(chr, buf, ctr);
+		printed_chars += _putchar_buf(f->fd, chr, buf, ctr);
 		return (printed_chars);
 	}
 
 	chr_fmt = format_character_output(&chr, &len, f);
 
-	printed_chars += _puts_nbytes_buf(chr_fmt, len, buf, ctr);
+	printed_chars += _puts_nbytes_buf(f->fd, chr_fmt, len, buf, ctr);
 	free(chr_fmt);
 	return (printed_chars);
 }
@@ -44,12 +44,13 @@ int handle_string(fmt_data_t *f, char *buf, int *ctr)
 
 	if (f->fmt_opts_set == 0) /* Check if formatting is required */
 	{
-		printed_chars += _puts_buf(str, buf, ctr);
+		printed_chars += _puts_buf(f->fd, str, buf, ctr);
 		return (printed_chars);
 	}
+
 	str_fmt = format_character_output(str, NULL, f);
 
-	printed_chars += _puts_buf(str_fmt, buf, ctr);
+	printed_chars += _puts_buf(f->fd, str_fmt, buf, ctr);
 	free(str_fmt);
 	return (printed_chars);
 }
@@ -67,6 +68,6 @@ int handle_percent(fmt_data_t *f, char *buf, int *ctr)
 	int printed_chars = 0;
 
 	(void)f;
-	printed_chars += _putchar_buf('%', buf, ctr);
+	printed_chars += _putchar_buf(f->fd, '%', buf, ctr);
 	return (printed_chars);
 }

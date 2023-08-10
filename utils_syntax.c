@@ -1,6 +1,4 @@
 #include "main.h"
-#include <ctype.h>
-#include <stdarg.h>
 
 /**
  * check_flag - checks if the current character at the position pointed by 's'

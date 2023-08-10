@@ -1,9 +1,10 @@
 #include "main.h"
-#include <unistd.h>
+#include <stdarg.h>
 
 /**
- * _printf - implementation of printf function
+ * _dprintf - implementation of dprintf function
  * @format: format string
+ * @fd: file descriptor to write output to
  *
  * Return:
  *		- number of characters printed, or
@@ -13,17 +14,18 @@
  *		- If format syntax is invalid, then it goes into NORMAL state and
  *		  prints the characters as-is
  */
-int _printf(const char *format, ...)
+int _dprintf(int fd, const char *format, ...)
 {
 	int printed_chars = 0;
 	va_list args;
 
 	if (format == NULL ||
-			_strcmp((char *)format, "%") == 0 ||
-			_strcmp((char *)format, "% ") == 0)
+		_strcmp((char *)format, "%") == 0 ||
+		_strcmp((char *)format, "% ") == 0 ||
+		fd == -1)
 		return (-1);
 	va_start(args, format);
-	printed_chars += _vdprintf(STDOUT_FILENO, format, args);
+	printed_chars += _vdprintf(fd, format, args);
 	va_end(args);
 	return (printed_chars);
 }

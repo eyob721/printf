@@ -16,7 +16,7 @@ int handle_custom_binary(fmt_data_t *f, char *buf, int *ctr)
 	bin_str = convert_uint_to_base_str(2, va_arg(f->args, unsigned int), 'l',
 									bin_buf, BIN_BUF_SIZE);
 	while (*bin_str != '\0')
-		printed_chars += _putchar_buf(*(bin_str++), buf, ctr);
+		printed_chars += _putchar_buf(f->fd, *(bin_str++), buf, ctr);
 	return (printed_chars);
 }
 
@@ -44,15 +44,15 @@ int handle_custom_string(fmt_data_t *f, char *buf, int *ctr)
 		ch = *str;
 		if ((ch > 0 && ch < 32) || ch >= 127)
 		{
-			printed_chars += _puts_buf("\\x", buf, ctr);
+			printed_chars += _puts_buf(f->fd, "\\x", buf, ctr);
 			hex_str = convert_uint_to_base_str(16, ch, 'C', hex_buf, HEX_BUF_SIZE);
 			if (_strlen(hex_str) == 1)
-				printed_chars += _putchar_buf('0', buf, ctr);
-			printed_chars += _puts_buf(hex_str, buf, ctr);
+				printed_chars += _putchar_buf(f->fd, '0', buf, ctr);
+			printed_chars += _puts_buf(f->fd, hex_str, buf, ctr);
 			str++;
 			continue;
 		}
-		printed_chars += _putchar_buf(ch, buf, ctr);
+		printed_chars += _putchar_buf(f->fd, ch, buf, ctr);
 		str++;
 	}
 	return (printed_chars);
@@ -84,13 +84,13 @@ int handle_custom_rot13(fmt_data_t *f, char *buf, int *ctr)
 		{
 			if (*str == *i)
 			{
-				printed_chars += _putchar_buf(*o, buf, ctr);
+				printed_chars += _putchar_buf(f->fd, *o, buf, ctr);
 				break;
 			}
 			++i, ++o;
 		}
 		if (*i == '\0')
-			printed_chars += _putchar_buf(*str, buf, ctr);
+			printed_chars += _putchar_buf(f->fd, *str, buf, ctr);
 		++str;
 		i = input;
 		o = output;
@@ -117,6 +117,6 @@ int handle_custom_reverse_string(fmt_data_t *f, char *buf, int *ctr)
 	if (str == NULL)
 		str = "(null)";
 	for (i = _strlen(str) - 1; i >= 0; --i)
-		printed_chars += _putchar_buf(str[i], buf, ctr);
+		printed_chars += _putchar_buf(f->fd, str[i], buf, ctr);
 	return (printed_chars);
 }

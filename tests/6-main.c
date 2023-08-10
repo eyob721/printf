@@ -1,4 +1,4 @@
-#include "main.h"
+#include "../main.h"
 #include <stdio.h>
 
 /**
@@ -13,7 +13,7 @@ int main(void)
 
 	printf("\nTest-%d:\n-----------------------------------------------\n", i++);
 	sum = _printf("[0]: %p\n", (void *)0);
-	printf("[Got]: %d\n", sum);	
+	printf("[Got]: %d\n", sum);
 	sum = printf("[0]: %p\n", (void *)0);
 	printf("[Exp]: %d\n", sum);
 
