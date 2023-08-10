@@ -40,6 +40,7 @@
  * @modifier: length modifier value
  * @spc_chr: specifier character
  * @invalid_spc: pointer used to save the invalid specifier position
+ * @fmt_opts_set: used to check if any of the formatting options are set
  */
 typedef struct format_data
 {
@@ -55,6 +56,7 @@ typedef struct format_data
 	char modifier;
 	char spc_chr;
 	char *invalid_spc;
+	int fmt_opts_set;
 } fmt_data_t;
 
 /**

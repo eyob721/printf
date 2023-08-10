@@ -1,4 +1,4 @@
-#include "printf.h"
+#include "main.h"
 
 /**
  * _putchar_buf - a function that writes a character to the format buffer

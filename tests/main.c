@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "printf.h"
+#include "../main.h"
 
 /**
  * main - Entry point

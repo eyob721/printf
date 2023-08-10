@@ -1,4 +1,4 @@
-#include "printf.h"
+#include "main.h"
 
 /**
  * handle_char - handler function for character conversion
@@ -12,6 +12,12 @@ int handle_char(fmt_data_t *f, char *buf, int *ctr)
 {
 	int len = 0, printed_chars = 0;
 	char *chr_fmt, chr = va_arg(f->args, int);
+
+	if (f->fmt_opts_set == 0) /* Check if formatting is required */
+	{
+		printed_chars += _putchar_buf(f->fd, chr, buf, ctr);
+		return (printed_chars);
+	}
 
 	chr_fmt = format_character_output(&chr, &len, f);
 
@@ -35,6 +41,12 @@ int handle_string(fmt_data_t *f, char *buf, int *ctr)
 
 	if (str == NULL)
 		str = "(null)";
+
+	if (f->fmt_opts_set == 0) /* Check if formatting is required */
+	{
+		printed_chars += _puts_buf(f->fd, str, buf, ctr);
+		return (printed_chars);
+	}
 
 	str_fmt = format_character_output(str, NULL, f);
 

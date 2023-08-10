@@ -1,5 +1,4 @@
-#include "printf.h"
-#include <stdarg.h>
+#include "main.h"
 
 /**
  * _vdprintf - implementation of vdprintf function
