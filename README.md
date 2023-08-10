@@ -50,11 +50,11 @@ Normal characters that are not part of the conversion specification in the forma
 
 ## Features
 
-So in this project these are the features of the standard printf we implemented.
+So in this project these are the format options of the standard printf we implemented.
 
-| Fomrat Options | Features Implemented |
-| Flags | \- , \+ , #,  0, and blank( ) |
+| Format Options | Features Implemented |
 | --- | --- |
+| Flags | \- , \+ , #,  0, and blank( ) |
 | Width | Non-negative integer |
 | Precision | Non-negative integer |
 | Modifiers | *h* and *l* only |
@@ -70,6 +70,7 @@ To use this implementation of printf in your project, simply copy the files in y
 ## Update
 
 This project now also supports dprintf and vdprintf implementations, on top of printf.
+
 NOTE: The format options features implemented have note changed, only added dprintf and vdprinf.
 
 ## Contributors
