@@ -1,8 +1,3 @@
-
-<p align="center">
-  <img src="https://www.alxafrica.com/wp-content/uploads/2022/01/header-logo.png">
-</p>
-
 # 0x11. C - printf
 
 ## Description
@@ -48,6 +43,18 @@ For example in the conversion specification `"%-7.4hd"`,
 
 Normal characters that are not part of the conversion specification in the format string are printed as-is to the standard output.
 
+## Restrictions
+
+There are restrictions on the functions and system calls we can use on this project. The following are the only allowed functions and system calls e.t.c.
+
+- `write` (man 2 write)
+- `malloc` (man 3 malloc)
+- `free` (man 3 free)
+- `va_start` (man 3 va_start)
+- `va_end` (man 3 va_end)
+- `va_copy` (man 3 va_copy)
+- `va_arg` (man 3 va_arg)
+
 ## Features
 
 So in this project these are the format options of the standard printf we implemented.
@@ -65,7 +72,7 @@ As you can see we handled most of the standard character and integer conversions
 
 ## Usage
 
-To use this implementation of printf in your project, simply copy the files in your project directory and compile them with your file that contains the main function and that should work.
+To use this implementation of printf in your project, simply copy the files to your project and compile them with your files that contains the main function and that should work.
 
 ## Update
 
